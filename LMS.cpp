@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include <limits>
 #include <windows.h>
 #include <sstream>
@@ -10,12 +11,30 @@ using namespace std;
 class Book
 {
 private:
-    /* data */
+    string Title, Author, Genre, IssueDate, ReturnDate;
+
 public:
-    string Title,Author,Genre,IssueDate,ReturnDate;
-    Book(/* args */);
-    ~Book();
+    Book(string title, string author, string genre, string issueDate, string returnDate)
+    {
+        Title = title;
+        Author = author;
+        Genre = genre;
+        IssueDate = issueDate;
+        ReturnDate = returnDate;
+    };
+    void display()
+    {
+        cout << "Title: " << Title << endl;
+        cout << "Author: " << Author << endl;
+        cout << "Genre: " << Genre << endl;
+        cout << "Issue Date: " << IssueDate << endl;
+        cout << "Return Date: " << ReturnDate << endl;
+    }
+    ~Book() {
+
+    };
 };
+
 void welcome();
 void studentLogin();
 void adminLogin();
@@ -41,8 +60,6 @@ void welcome()
     {
         cout << "---> ";
         int x;
-
-        // Check for input failure
         if (!(cin >> x))
         {
             cin.clear();
@@ -163,8 +180,34 @@ void createAccount()
     welcome();
 };
 
-void listBooks() {
+void listBooks()
+{
+    ifstream list("booklist.csv");
+    // list.open("booklist.csv");
+    if (!list.is_open())
+    {
+        cerr << "Error opening file: booklist.csv" << endl;
+    }
+    string line;
+    vector<Book> books;
+    while (getline(list, line))
+    {
+        stringstream inputString(line);
+        string title, author, genre, issueDate, returnDate;
+        getline(inputString, title, ',');
+        getline(inputString, author, ',');
+        getline(inputString, genre, ',');
+        getline(inputString, issueDate, ',');
+        getline(inputString, returnDate, '\n');
 
+        Book book(title, author, genre, issueDate, returnDate);
+        books.push_back(book);
+    }
+    for (auto book : books)
+    {
+        book.display();
+        cout << "====================================" << endl;
+    }
 };
 
 // void navigate()
