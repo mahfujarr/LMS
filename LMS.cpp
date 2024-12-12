@@ -3,14 +3,25 @@
 #include <string>
 #include <limits>
 #include <windows.h>
+#include <sstream>
 
 using namespace std;
 
+class Book
+{
+private:
+    /* data */
+public:
+    string Title,Author,Genre,IssueDate,ReturnDate;
+    Book(/* args */);
+    ~Book();
+};
 void welcome();
 void studentLogin();
 void adminLogin();
 void createAccount();
 void listBooks();
+void search();
 void navigate();
 
 int main()
@@ -39,7 +50,6 @@ void welcome()
             cout << "Invalid input. Please enter a number between 1 and 4." << endl;
             continue;
         }
-
         if (x == 1)
         {
             studentLogin();
@@ -68,9 +78,54 @@ void welcome()
 }
 void studentLogin()
 {
-    ofstream cred("credentials.txt");
+    string name, pass, line;
+    ifstream cred("data/credentials.txt");
+
+    if (!cred)
+    {
+        cout << "Unable to open 'credentials.txt'" << endl;
+        return;
+    }
+
     cout << "Please enter your username: " << endl;
-    cout << "Please enter your password: " << endl;
+    cin >> name;
+
+    bool found = false;
+    while (getline(cred, line))
+    {
+        istringstream iss(line);
+        string username, password;
+        iss >> username >> password;
+
+        if (username == name)
+        {
+            found = true;
+            cout << "Please enter your password: " << endl;
+            cin >> pass;
+
+            if (pass == password)
+            {
+                cout << "Login successful!" << endl;
+            }
+            else
+            {
+                cout << "Incorrect password." << endl;
+                cout << "Going to main menu in: ";
+                for (int i = 3; i >= 1; i--)
+                {
+                    cout << i << endl;
+                    Sleep(1000);
+                }
+                welcome();
+            }
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        cout << "Username not found." << endl;
+    }
 }
 void adminLogin() {
 
@@ -86,7 +141,7 @@ void createAccount()
     ofstream cred("data/credentials.txt", ios::app);
     if (cred.is_open())
     {
-        cred << name << ":";
+        cred << name << " ";
         cout << "Please enter your password: ";
         cin >> pass;
         cred << pass << endl;
