@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <limits>
+#include <windows.h>
 
 using namespace std;
 
@@ -9,49 +11,58 @@ void studentLogin();
 void adminLogin();
 void createAccount();
 void listBooks();
+void navigate();
 
 int main()
 {
     welcome();
-    ofstream out("data.txt");
-    out << "This is a sample line.";
 }
 
 void welcome()
 {
+    system("cls");
     cout << "Welcome to Library Management System." << endl;
     cout << "Press any option below to begin: " << endl;
     cout << "1. Login as student\n2. Login as admin\n3. Create student account\n4. List all books" << endl;
-    cout << "---> ";
-    int x;
     bool validInput = false;
 
     while (!validInput)
     {
-        cin >> x;
-        switch (x)
+        cout << "---> ";
+        int x;
+
+        // Check for input failure
+        if (!(cin >> x))
         {
-        case 1:
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+            continue;
+        }
+
+        if (x == 1)
+        {
             studentLogin();
             validInput = true;
-            break;
-        case 2:
+        }
+        else if (x == 2)
+        {
             adminLogin();
             validInput = true;
-            break;
-        case 3:
+        }
+        else if (x == 3)
+        {
             createAccount();
             validInput = true;
-            break;
-        case 4:
+        }
+        else if (x == 4)
+        {
             listBooks();
             validInput = true;
-            break;
-        default:
-            cout << "Invalid input." << endl;
-            cout << "Please input from 1 to 4." << endl;
-            cout << "---> ";
-            break;
+        }
+        else
+        {
+            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
         }
     }
 }
@@ -64,9 +75,11 @@ void studentLogin()
 void adminLogin() {
 
 };
+
 void createAccount()
 {
     string name, pass;
+    system("cls");
     cout << "ONLY ONE RULE FOR USERNAME!!\nDON'T use ':' character in your username.\n";
     cout << "Please enter your username: ";
     cin >> name;
@@ -77,14 +90,30 @@ void createAccount()
         cout << "Please enter your password: ";
         cin >> pass;
         cred << pass << endl;
-        cout << "Account created Successfully.";
+        system("cls");
+        cout << "Account created Successfully." << endl;
         cred.close();
     }
     else
     {
         cout << "Error opening the file 'credentials.txt'" << endl;
     }
+    // cout << "press any button to go to the main menu." << endl;
+    cout << "Going to main menu in: ";
+    for (int i = 5; i >= 1; i--)
+    {
+        cout << i << endl;
+        Sleep(1000);
+    }
+    welcome();
 };
+
 void listBooks() {
 
 };
+
+// void navigate()
+// {
+//     cout << "What do you want to do now?" << endl;
+//     cout <<
+// }
