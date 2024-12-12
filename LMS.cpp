@@ -1,4 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+
 using namespace std;
 
 void welcome();
@@ -10,6 +13,8 @@ void listBooks();
 int main()
 {
     welcome();
+    ofstream out("data.txt");
+    out << "This is a sample line.";
 }
 
 void welcome()
@@ -52,14 +57,33 @@ void welcome()
 }
 void studentLogin()
 {
+    ofstream cred("credentials.txt");
     cout << "Please enter your username: " << endl;
     cout << "Please enter your password: " << endl;
 }
 void adminLogin() {
 
 };
-void createAccount() {
-
+void createAccount()
+{
+    string name, pass;
+    cout << "ONLY ONE RULE FOR USERNAME!!\nDON'T use ':' character in your username.\n";
+    cout << "Please enter your username: ";
+    cin >> name;
+    ofstream cred("data/credentials.txt", ios::app);
+    if (cred.is_open())
+    {
+        cred << name << ":";
+        cout << "Please enter your password: ";
+        cin >> pass;
+        cred << pass << endl;
+        cout << "Account created Successfully.";
+        cred.close();
+    }
+    else
+    {
+        cout << "Error opening the file 'credentials.txt'" << endl;
+    }
 };
 void listBooks() {
 
