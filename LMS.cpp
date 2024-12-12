@@ -182,7 +182,7 @@ void createAccount()
 
 void listBooks()
 {
-    ifstream list("booklist.csv");
+    ifstream list("data/booklist.csv");
     // list.open("booklist.csv");
     if (!list.is_open())
     {
