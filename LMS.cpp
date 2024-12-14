@@ -10,10 +10,8 @@ using namespace std;
 
 class Book
 {
-private:
-    string Title, Author, Genre, IssueDate, ReturnDate;
-
 public:
+    string Title, Author, Genre, IssueDate, ReturnDate;
     Book(string title, string author, string genre, string issueDate, string returnDate)
     {
         Title = title;
@@ -31,6 +29,28 @@ public:
         cout << "Return Date: " << ReturnDate << endl;
     }
     ~Book() {
+
+    };
+};
+
+class Student : public Book
+{
+private:
+    string Name;
+    int ID;
+    string borrowedBook;
+
+public:
+    Student(string name, int id)
+    {
+        ID = id;
+        Name = name;
+    };
+    void borrowBook(string title)
+    {
+        borrowedBook = title;
+    };
+    ~Student() {
 
     };
 };
@@ -53,7 +73,7 @@ void welcome()
     system("cls");
     cout << "Welcome to Library Management System." << endl;
     cout << "Press any option below to begin: " << endl;
-    cout << "1. Login as student\n2. Login as admin\n3. Create student account\n4. List all books" << endl;
+    cout << "1. Login as student\n2. Login as admin\n3. Create student account\n4. List all books\n5.Search Books." << endl;
     bool validInput = false;
 
     while (!validInput)
@@ -64,7 +84,7 @@ void welcome()
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+            cout << "Invalid input. Please enter a number between 1 and 5." << endl;
             continue;
         }
         if (x == 1)
@@ -85,6 +105,11 @@ void welcome()
         else if (x == 4)
         {
             listBooks();
+            validInput = true;
+        }
+        else if (x == 5)
+        {
+            search();
             validInput = true;
         }
         else
@@ -203,6 +228,7 @@ void listBooks()
         Book book(title, author, genre, issueDate, returnDate);
         books.push_back(book);
     }
+    system("cls");
     for (auto book : books)
     {
         book.display();
