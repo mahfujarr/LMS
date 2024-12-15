@@ -82,9 +82,14 @@ void navigate();
 int main()
 {
     system("cls");
-    // welcome();
+    welcome();
+    // studentLogin();
+    // adminLogin();
+    // createAccount();
+    // listBooks();
     // addBook();
-    listBooks();
+    // searchBook();
+    // navigate();
 }
 
 void welcome()
@@ -157,7 +162,7 @@ void welcome()
 }
 void studentLogin()
 {
-    string name, pass, line;
+    string ID, pass, line;
     ifstream cred("data/credentials.txt");
 
     if (!cred)
@@ -166,8 +171,8 @@ void studentLogin()
         return;
     }
 
-    cout << "Please enter your username: " << endl;
-    cin >> name;
+    cout << "Please enter your ID: ";
+    cin >> ID;
 
     bool found = false;
     while (getline(cred, line))
@@ -176,14 +181,15 @@ void studentLogin()
         string username, password;
         iss >> username >> password;
 
-        if (username == name)
+        if (username == ID)
         {
             found = true;
-            cout << "Please enter your password: " << endl;
+            cout << "Please enter your password: ";
             cin >> pass;
 
             if (pass == password)
             {
+                system("cls");
                 cout << "Login successful!" << endl;
             }
             else
@@ -204,7 +210,7 @@ void studentLogin()
 
     if (!found)
     {
-        cout << "Username not found." << endl;
+        cout << "ID not found." << endl;
     }
 }
 void adminLogin() {
@@ -213,15 +219,15 @@ void adminLogin() {
 
 void createAccount()
 {
-    string name, pass;
+    string ID, pass;
     system("cls");
-    cout << "ONLY ONE RULE FOR USERNAME!!\nDON'T use ':' character in your username.\n";
-    cout << "Please enter your username: ";
-    cin >> name;
+    // cout << "ONLY ONE RULE FOR USERNAME!!\nDON'T use ':' character in your username.\n";
+    cout << "Please enter your ID: ";
+    cin >> ID;
     ofstream cred("data/credentials.txt", ios::app);
     if (cred.is_open())
     {
-        cred << name << " ";
+        cred << ID << " ";
         cout << "Please enter your password: ";
         cin >> pass;
         cred << pass << endl;
@@ -235,7 +241,7 @@ void createAccount()
     }
     // cout << "press any button to go to the main menu." << endl;
     cout << "Going to main menu in: ";
-    for (int i = 5; i >= 1; i--)
+    for (int i = 3; i >= 1; i--)
     {
         cout << i << endl;
         Sleep(1000);
@@ -275,13 +281,14 @@ void listBooks()
         Book book = books[i];
         book.display();
     }
+    cout << "Press any key to go to main menu." << endl;
     cin.get();
-    cout << "Going to main menu in: ";
-    for (int i = 3; i >= 1; i--)
-    {
-        cout << i << endl;
-        Sleep(1000);
-    }
+    // cout << "Going to main menu in: ";
+    // for (int i = 3; i >= 1; i--)
+    // {
+    //     cout << i << endl;
+    //     Sleep(1000);
+    // }
     welcome();
 };
 void addBook()
@@ -298,9 +305,39 @@ void addBook()
     Book b1(title, author, genre);
     b1.add();
 };
-void searchBook() {
+void searchBook()
+{
+    ifstream find("data/booklist.csv");
+    if (!find.is_open())
+    {
+        cerr << "Error opening file: booklist.csv" << endl;
+        return;
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    string target;
+    cout << "Enter the book title, author, or genre to search: ";
+    getline(cin, target);
 
-};
+    int i = 0;
+    string book;
+    while (getline(find, book))
+    {
+        i++;
+        if (book.find(target) != string::npos)
+        {
+            cout << "Found entity at book " << i << ": " << book << endl;
+            // cout << "The 2 dates after #genre are subsequently the #issue & #return date." << endl;
+            break;
+        }
+    }
+
+    if (i == 0)
+    {
+        cout << "Target string not found." << endl;
+    }
+
+    find.close(); // Close the file after searching
+}
 void navigate() {
 
 };
