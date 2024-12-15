@@ -12,7 +12,7 @@ class Book
 {
 public:
     string Title, Author, Genre, IssueDate, ReturnDate;
-    Book(string title, string author, string genre, string issueDate, string returnDate)
+    Book(string title = "NULL", string author = "NULL", string genre = "NULL", string issueDate = "NULL", string returnDate = "NULL")
     {
         Title = title;
         Author = author;
@@ -28,24 +28,39 @@ public:
         cout << "Issue Date: " << IssueDate << endl;
         cout << "Return Date: " << ReturnDate << endl;
     }
+    void add()
+    {
+        ofstream bookList("data/booklist.csv", ios::app);
+        if (bookList.is_open())
+        {
+            bookList << Title << ", ";
+            bookList << Author << ", ";
+            bookList << Genre << ", ";
+            bookList << IssueDate << ", ";
+            bookList << ReturnDate << endl;
+            cout << "Book Added Successfully." << endl;
+            bookList.close();
+        }
+        else
+        {
+            cout << "Error opening the file 'booklist.txt'" << endl;
+        }
+    }
     ~Book() {
 
     };
 };
-
-class Student : public Book
+class Student
 {
-private:
+public:
     string Name;
     int ID;
     string borrowedBook;
-
-public:
     Student(string name, int id)
     {
-        ID = id;
         Name = name;
-    };
+        ID = id;
+    }
     void borrowBook(string title)
     {
         borrowedBook = title;
@@ -60,20 +75,30 @@ void studentLogin();
 void adminLogin();
 void createAccount();
 void listBooks();
-void search();
+void addBook();
+void searchBook();
 void navigate();
 
 int main()
 {
-    welcome();
+    system("cls");
+    // welcome();
+    // addBook();
+    listBooks();
 }
 
 void welcome()
 {
-    system("cls");
     cout << "Welcome to Library Management System." << endl;
     cout << "Press any option below to begin: " << endl;
-    cout << "1. Login as student\n2. Login as admin\n3. Create student account\n4. List all books\n5.Search Books." << endl;
+    cout << "1. Login as student" << endl;
+    cout << "2. Login as admin" << endl;
+    cout << "3. Create student account" << endl;
+    cout << "4. List all books" << endl;
+    cout << "5.Add Books." << endl;
+    cout << "6.Search Books." << endl;
+    cout << "0.Exit the program." << endl;
+
     bool validInput = false;
 
     while (!validInput)
@@ -87,7 +112,14 @@ void welcome()
             cout << "Invalid input. Please enter a number between 1 and 5." << endl;
             continue;
         }
-        if (x == 1)
+        if (x == 0)
+        {
+            system("cls");
+            cout << "Program is terminated.\nHope to see you soon!";
+            exit(0);
+            validInput = true;
+        }
+        else if (x == 1)
         {
             studentLogin();
             validInput = true;
@@ -109,7 +141,12 @@ void welcome()
         }
         else if (x == 5)
         {
-            search();
+            addBook();
+            validInput = true;
+        }
+        else if (x == 6)
+        {
+            searchBook();
             validInput = true;
         }
         else
@@ -158,6 +195,7 @@ void studentLogin()
                     cout << i << endl;
                     Sleep(1000);
                 }
+                system("cls");
                 welcome();
             }
             break;
@@ -202,6 +240,7 @@ void createAccount()
         cout << i << endl;
         Sleep(1000);
     }
+    system("cls");
     welcome();
 };
 
@@ -229,15 +268,39 @@ void listBooks()
         books.push_back(book);
     }
     system("cls");
-    for (auto book : books)
+    cout << "Listing all " << books.size() << " books." << endl;
+    for (int i = 0; i < books.size(); ++i)
     {
+        cout << "===============( " << i + 1 << " )===============" << endl;
+        Book book = books[i];
         book.display();
-        cout << "====================================" << endl;
     }
+    cin.get();
+    cout << "Going to main menu in: ";
+    for (int i = 3; i >= 1; i--)
+    {
+        cout << i << endl;
+        Sleep(1000);
+    }
+    welcome();
 };
+void addBook()
+{
+    string title, author, genre;
+    cout << "Welcome to the book adding section.\nPlease double check the spellings." << endl;
+    cout << "What's the title?\n-->";
+    getline(cin, title);
+    cout << "Who's the author?\n-->";
+    getline(cin, author);
+    cout << "What's the genre?\n-->";
+    getline(cin, genre);
 
-// void navigate()
-// {
-//     cout << "What do you want to do now?" << endl;
-//     cout <<
-// }
+    Book b1(title, author, genre);
+    b1.add();
+};
+void searchBook() {
+
+};
+void navigate() {
+
+};
