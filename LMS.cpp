@@ -77,6 +77,8 @@ void createAccount();
 void listBooks();
 void addBook();
 void searchBook();
+void deleteBook();
+void editBook();
 void navigate();
 
 int main()
@@ -88,6 +90,7 @@ int main()
     // createAccount();
     // listBooks();
     // addBook();
+    // deleteBook();
     // searchBook();
     // navigate();
 }
@@ -102,6 +105,8 @@ void welcome()
     cout << "4. List all books" << endl;
     cout << "5.Add Books." << endl;
     cout << "6.Search Books." << endl;
+    cout << "7.Edit Books." << endl;
+    cout << "8.Delete Books." << endl;
     cout << "0.Exit the program." << endl;
 
     bool validInput = false;
@@ -154,9 +159,19 @@ void welcome()
             searchBook();
             validInput = true;
         }
+        else if (x == 7)
+        {
+            editBook();
+            validInput = true;
+        }
+        else if (x == 8)
+        {
+            deleteBook();
+            validInput = true;
+        }
         else
         {
-            cout << "Invalid input. Please enter a number between 1 and 4." << endl;
+            cout << "Invalid input. Please enter a number between 0 and 8." << endl;
         }
     }
 }
@@ -335,9 +350,68 @@ void searchBook()
     {
         cout << "Target string not found." << endl;
     }
-
-    find.close(); // Close the file after searching
+    find.close();
 }
+void deleteBook()
+{
+    ifstream fin("data/booklist.csv", ios::in);
+    ofstream fout("data/TEMP.csv", ios::out);
+    if (!fin.is_open())
+    {
+        cerr << "Error Opening CSV file" << endl;
+    }
+    // string name, author, genre, issueDate, returnDate;
+    // vector<string> row;
+    bool bookFound = false;
+    string line;
+    int bookNum, currentBook = 1;
+    cout << "Enter the book number to delete: ";
+    cin >> bookNum;
+    while (getline(fin, line))
+    {
+        if (currentBook != bookNum)
+        {
+            fout << line << '\n';
+        }
+        else
+        {
+            bookFound = true;
+        }
+        currentBook++;
+    }
+    if (bookFound)
+    {
+        cout << "Book deleted successfully." << endl;
+    }
+    else
+    {
+        cout << "Book not found" << endl;
+    }
+    fin.close();
+    fout.close();
+    remove("data/booklist.csv");
+    rename("data/TEMP.csv", "data/booklist.csv");
+    // if (remove("data/booklist.csv") != 0)
+    // {
+    //     cerr << "Error: Could not delete 'booklist.csv'." << endl;
+    //     return;
+    // }
+
+    // if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+    // {
+    //     cerr << "Error: Could not rename 'TEMP.csv to 'booklist.csv'" << endl;
+    //     return;
+    // }
+};
+void editBook()
+{
+    cout << "Feature is under development" << endl;
+    for (int i = 3; i >= 1; i--)
+    {
+        Sleep(1000);
+    }
+    welcome();
+};
 void navigate() {
 
 };
