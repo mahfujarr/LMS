@@ -355,18 +355,17 @@ void searchBook()
 void deleteBook()
 {
     ifstream fin("data/booklist.csv", ios::in);
-    ofstream fout("data/TEMP.csv", ios::out);
     if (!fin.is_open())
     {
         cerr << "Error Opening CSV file" << endl;
     }
-    // string name, author, genre, issueDate, returnDate;
-    // vector<string> row;
+
     bool bookFound = false;
     string line;
     int bookNum, currentBook = 1;
     cout << "Enter the book number to delete: ";
     cin >> bookNum;
+    ofstream fout("data/TEMP.csv", ios::out);
     while (getline(fin, line))
     {
         if (currentBook != bookNum)
