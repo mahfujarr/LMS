@@ -293,15 +293,17 @@ void listBooks()
         cout << "===============( " << i + 1 << " )===============" << endl;
         Book book = books[i];
         book.display();
+        // Sleep(250);
     }
     cout << "Press any key to go to main menu." << endl;
     cin.get();
-    // cout << "Going to main menu in: ";
-    // for (int i = 3; i >= 1; i--)
-    // {
-    //     cout << i << endl;
-    //     Sleep(1000);
-    // }
+    cin.get();
+    cout << "Going to main menu in: ";
+    for (int i = 3; i >= 1; i--)
+    {
+        cout << i << endl;
+        Sleep(1000);
+    }
     welcome();
 };
 void addBook()
