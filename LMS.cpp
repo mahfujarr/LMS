@@ -69,7 +69,6 @@ public:
 
     };
 };
-
 void welcome();
 void studentLogin();
 void adminLogin();
@@ -91,6 +90,7 @@ int main()
     // listBooks();
     // addBook();
     // deleteBook();
+    // editBook();
     // searchBook();
     // navigate();
 }
@@ -231,7 +231,6 @@ void studentLogin()
 void adminLogin() {
 
 };
-
 void createAccount()
 {
     string ID, pass;
@@ -264,7 +263,6 @@ void createAccount()
     system("cls");
     welcome();
 };
-
 void listBooks()
 {
     ifstream list("data/booklist.csv");
@@ -390,24 +388,76 @@ void deleteBook()
     fout.close();
     remove("data/booklist.csv");
     rename("data/TEMP.csv", "data/booklist.csv");
-    // if (remove("data/booklist.csv") != 0)
-    // {
-    //     cerr << "Error: Could not delete 'booklist.csv'." << endl;
-    //     return;
-    // }
-
-    // if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
-    // {
-    //     cerr << "Error: Could not rename 'TEMP.csv to 'booklist.csv'" << endl;
-    //     return;
-    // }
 };
 void editBook()
 {
-    cout << "Feature is under development" << endl;
-    for (int i = 3; i >= 1; i--)
+    ifstream fin("data/booklist.csv", ios::in);
+    if (!fin.is_open())
     {
-        Sleep(1000);
+        cerr << "Error Opening CSV file" << endl;
+    }
+
+    bool bookFound = false;
+    string line;
+    int bookNum, currentBook = 1;
+    cout << "Enter the book number to edit: ";
+    cin >> bookNum;
+    cin.ignore();
+    ofstream fout("data/TEMP.csv", ios::out);
+
+    string title, author, genre, issueDate, returnDate;
+
+    while (getline(fin, line))
+    {
+        if (currentBook == bookNum)
+        {
+            cout << "Welcome to the book editing section.\nPlease double check the spellings." << endl;
+            stringstream inputString(line);
+            getline(inputString, title, ',');
+            getline(inputString, author, ',');
+            getline(inputString, genre, ',');
+            getline(inputString, issueDate, ',');
+            getline(inputString, returnDate, '\n');
+            if (issueDate == "" || returnDate == "")
+            {
+                issueDate = "NULL";
+                returnDate = "NULL";
+            }
+            cout << "What's the title?\n-->";
+            getline(cin, title);
+            cout << "Who's the author?\n-->";
+            getline(cin, author);
+            cout << "What's the genre?\n-->";
+            getline(cin, genre);
+            fout << title << ", " << author << ", " << genre << ", " << issueDate << ", " << returnDate << '\n';
+            bookFound = true;
+        }
+        else
+        {
+            fout << line << '\n';
+        }
+        currentBook++;
+    }
+    if (bookFound)
+    {
+        cout << "Book edited successfully." << endl;
+    }
+    else
+    {
+        cout << "Book not found" << endl;
+    }
+    fin.close();
+    fout.close();
+    if (bookFound)
+    {
+        cout << "Book edited successfully." << endl;
+        remove("data/booklist.csv");
+        rename("data/TEMP.csv", "data/booklist.csv");
+    }
+    else
+    {
+        cout << "Book not found." << endl;
+        remove("data/TEMP.csv");
     }
     welcome();
 };
