@@ -5,11 +5,11 @@
 #include <limits>
 #include <windows.h>
 #include <sstream>
-
 using namespace std;
 
 bool loggedInAsAdmin = false;
 bool loggedInAsStudent = false;
+string Alias = "Guest!\n";
 
 class Book
 {
@@ -22,6 +22,7 @@ public:
         Genre = genre;
         IssueDate = issueDate;
         ReturnDate = returnDate;
+        // isBorrowed = borrowed;
     };
     void display()
     {
@@ -30,6 +31,7 @@ public:
         cout << "Genre: " << Genre << endl;
         cout << "Issue Date: " << IssueDate << endl;
         cout << "Return Date: " << ReturnDate << endl;
+        cout << "Availability: " << (IssueDate != " NULL" || ReturnDate != " NULL" ? "Not Available" : "Available") << endl;
     }
     void add()
     {
@@ -40,7 +42,8 @@ public:
             bookList << Author << ", ";
             bookList << Genre << ", ";
             bookList << IssueDate << ", ";
-            bookList << ReturnDate << endl;
+            bookList << ReturnDate << ", ";
+            // bookList << isBorrowed << endl;
             cout << "Book Added Successfully." << endl;
             bookList.close();
         }
@@ -53,36 +56,30 @@ public:
 
     };
 };
-class Student
-{
-public:
-    string Name;
-    int ID;
-    string borrowedBook;
-    Student(string name, int id)
-    {
-        Name = name;
-        ID = id;
-    }
-    void borrowBook(string title)
-    {
-        borrowedBook = title;
-    };
-    ~Student() {
-
-    };
-};
 
 void welcome();
 void studentLogin();
 void adminLogin();
 void createAccount();
 void listBooks();
+void borrowBook();
 void addBook();
 void searchBook();
 void deleteBook();
 void editBook();
 void navigate();
+
+void mainMenu()
+{
+    cout << "Going to main menu in: ";
+    for (int i = 3; i >= 1; i--)
+    {
+        cout << i << "...";
+        Sleep(1000);
+    }
+    // system("cls");
+    welcome();
+};
 
 int main()
 {
@@ -101,6 +98,18 @@ int main()
 
 void welcome()
 {
+    if (Alias != "")
+    {
+        cout << "\nHello, " << Alias;
+    }
+    if (loggedInAsAdmin)
+    {
+        cout << "(Admin)" << endl;
+    }
+    else if (loggedInAsStudent)
+    {
+        cout << "(Student)" << endl;
+    }
     cout << "Welcome to Library Management System." << endl;
     cout << "Press any option below to begin: " << endl;
     cout << "1. Login as student" << endl;
@@ -129,7 +138,7 @@ void welcome()
         if (x == 0)
         {
             system("cls");
-            cout << "Program is terminated.\nHope to see you soon!";
+            cout << "Program is terminated.\nHope to see you soon," << Alias << "!" << endl;
             exit(0);
             validInput = true;
         }
@@ -212,20 +221,15 @@ void studentLogin()
                 loggedInAsStudent = true;
                 system("cls");
                 cout << "Login successful!" << endl;
-                cout << "You're now interacting as: '" << username << "'" << endl;
-                welcome();
+                Alias = username + "!\n";
+                cout << "You'll be interacting as: '" << username << "'" << endl;
+                Sleep(2000);
+                mainMenu();
             }
             else
             {
                 cout << "Incorrect password." << endl;
-                cout << "Going to main menu in: ";
-                for (int i = 3; i >= 1; i--)
-                {
-                    cout << i << endl;
-                    Sleep(1000);
-                }
-                system("cls");
-                welcome();
+                mainMenu();
             }
             break;
         }
@@ -234,14 +238,7 @@ void studentLogin()
     if (!found)
     {
         cout << "ID not found." << endl;
-        cout << "Going to main menu in: ";
-        for (int i = 3; i >= 1; i--)
-        {
-            cout << i << endl;
-            Sleep(1000);
-        }
-        system("cls");
-        welcome();
+        mainMenu();
     }
 }
 void adminLogin()
@@ -250,11 +247,12 @@ void adminLogin()
     string pass;
     cout << "Please enter the admin password: ";
     cin >> pass;
-    if (pass == "admin")
+    if (pass == "admin") // Password for admin is "admin"
     {
         system("cls");
         cout << "Login successful!" << endl;
         loggedInAsAdmin = true;
+        Alias = "Admin!\n";
         cout << "You are now interacting as an Admin." << endl;
         welcome();
     }
@@ -296,55 +294,41 @@ void createAccount()
             cout << "Error opening the file 'credentials.txt'" << endl;
         }
         // cout << "press any button to go to the main menu." << endl;
-        cout << "Going to main menu in: ";
-        for (int i = 3; i >= 1; i--)
-        {
-            cout << i << endl;
-            Sleep(1000);
-        }
-        system("cls");
-        welcome();
+        mainMenu();
     }
     else
     {
         cout << "You are not logged in as admin." << endl;
         cout << "Please log in as admin to use this function." << endl;
-        cout << "Going to main menu in: ";
-        for (int i = 3; i >= 1; i--)
-        {
-            cout << i << endl;
-            Sleep(1000);
-        }
-        system("cls");
-        welcome();
+        mainMenu();
     }
 };
 void listBooks()
 {
-    ifstream list("data/booklist.csv");
-    // list.open("booklist.csv");
-    if (!list.is_open())
+    ifstream fin("data/booklist.csv");
+    if (!fin.is_open())
     {
         cerr << "Error opening file: booklist.csv" << endl;
     }
     string line;
     vector<Book> books;
-    while (getline(list, line))
+    while (getline(fin, line))
     {
         stringstream inputString(line);
-        string title, author, genre, issueDate, returnDate;
+        string title, author, genre, issueDate, returnDate, isBorrowed;
         getline(inputString, title, ',');
         getline(inputString, author, ',');
         getline(inputString, genre, ',');
         getline(inputString, issueDate, ',');
         getline(inputString, returnDate, '\n');
+        // getline(inputString, isBorrowed, '\n');
 
         Book book(title, author, genre, issueDate, returnDate);
         books.push_back(book);
     }
     system("cls");
     cout << "Listing all " << books.size() << " books." << endl;
-    for (int i = 0; i < books.size(); ++i)
+    for (int i = 0; i < books.size(); i++)
     {
         cout << "===============( " << i + 1 << " )===============" << endl;
         Book book = books[i];
@@ -357,6 +341,9 @@ void listBooks()
     cin.get();
     system("cls");
     welcome();
+};
+void borrowBook() {
+    
 };
 void addBook()
 {
@@ -378,14 +365,7 @@ void addBook()
     {
         cout << "You are not logged in as admin." << endl;
         cout << "Please log in as admin to use this function." << endl;
-        cout << "Going to main menu in: ";
-        for (int i = 3; i >= 1; i--)
-        {
-            cout << i << endl;
-            Sleep(1000);
-        }
-        system("cls");
-        welcome();
+        mainMenu();
     }
 };
 void searchBook()
@@ -465,14 +445,7 @@ void deleteBook()
     {
         cout << "You are not logged in as admin." << endl;
         cout << "Please log in as admin to use this function." << endl;
-        cout << "Going to main menu in: ";
-        for (int i = 3; i >= 1; i--)
-        {
-            cout << i << endl;
-            Sleep(1000);
-        }
-        system("cls");
-        welcome();
+        mainMenu();
     }
 };
 void editBook()
@@ -506,7 +479,7 @@ void editBook()
                 getline(inputString, genre, ',');
                 getline(inputString, issueDate, ',');
                 getline(inputString, returnDate, '\n');
-                if (issueDate == "" || returnDate == "")
+                if (issueDate == "")
                 {
                     issueDate = "NULL";
                     returnDate = "NULL";
@@ -553,14 +526,7 @@ void editBook()
     {
         cout << "You are not logged in as admin." << endl;
         cout << "Please log in as admin to use this function." << endl;
-        cout << "Going to main menu in: ";
-        for (int i = 3; i >= 1; i--)
-        {
-            cout << i << endl;
-            Sleep(1000);
-        }
-        system("cls");
-        welcome();
+        mainMenu();
     }
 };
 void navigate() {
