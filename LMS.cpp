@@ -64,33 +64,19 @@ void addBook();
 void searchBook();
 void deleteBook();
 void editBook();
-void navigate();
-
-void mainMenu()
-{
-    cout << "Going to main menu in: ";
-    for (int i = 3; i >= 1; i--)
-    {
-        cout << i << "...";
-        Sleep(1000);
-    }
-    cout << endl;
-    system("cls");
-    welcome();
-};
+void logOut();
+void mainMenu();
 
 int main()
 {
     system("cls");
-    cout << R"(
- __        __   _                          
- \ \      / /__| | ___ ___  _ __ ___   ___ 
-  \ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \
-   \ V  V /  __/ | (_| (_) | | | | | |  __/
-    \_/\_/ \___|_|\___\___/|_| |_| |_|\___|
-                                           
-)" << endl;
-
+    cout << R"( _      __      __                        __            __    __  ___ ____
+| | /| / /___  / /____ ___   __ _  ___   / /_ ___      / /   /  |/  // __/
+| |/ |/ // -_)/ // __// _ \ /  ' \/ -_) / __// _ \    / /__ / /|_/ /_\ \  
+|__/|__/ \__//_/ \__/ \___//_/_/_/\__/  \__/ \___/   /____//_/  /_//___/  )"
+         << endl
+         << endl;
+    // borrowBook();
     welcome();
     // studentLogin();
     // adminLogin();
@@ -108,6 +94,7 @@ void welcome()
     if (Alias != "")
     {
         cout << "\033[1,36mHello, " << Alias << "\033[0m";
+        (Alias == "Guest!\n" ? cout << "" << endl : cout << "                               00.\033[31mLogout\033[0m" << endl);
     }
     cout << "========================================" << endl;
     if (loggedInAsAdmin)
@@ -123,16 +110,17 @@ void welcome()
         cout << "               Main Menu             (G)" << endl;
     }
     cout << "========================================" << endl;
-    cout << "Press available option below to begin: " << endl;
+    cout << "Press any available option to begin: " << endl;
     cout << "----------------------------------------" << endl;
     cout << "1. \033[1;32mLogin as student\033[0m" << endl;
     cout << "2. \033[1;32mLogin as admin\033[0m" << endl;
     cout << (loggedInAsAdmin ? "3. \033[1;32mCreate student account\033[0m" : "3. Create student account") << endl;
     cout << "4. \033[1;32mList all books\033[0m" << endl;
-    cout << (loggedInAsAdmin ? "5. \033[1;32mAdd Books\033[0m" : "5. Add Books") << endl;
-    cout << "6. \033[1;32mSearch Books\033[0m" << endl;
-    cout << (loggedInAsAdmin ? "7. \033[1;32mEdit Books\033[0m" : "7. Edit Books") << endl;
-    cout << (loggedInAsAdmin ? "8. \033[1;31mDelete Books\033[0m" : "8. Delete Books") << endl;
+    cout << (loggedInAsStudent ? "5. \033[1;32mBorrow Book\033[0m" : "5. Borrow Book") << endl;
+    cout << (loggedInAsAdmin ? "6. \033[1;32mAdd Books\033[0m" : "6. Add Books") << endl;
+    cout << "7. \033[1;32mSearch Books\033[0m" << endl;
+    cout << (loggedInAsAdmin ? "8. \033[1;32mEdit Books\033[0m" : "8. Edit Books") << endl;
+    cout << (loggedInAsAdmin ? "9. \033[1;31mDelete Books\033[0m" : "9. Delete Books") << endl;
     cout << "0. \033[1;31mExit the program\033[0m" << endl;
     cout << "----------------------------------------" << endl;
 
@@ -141,7 +129,7 @@ void welcome()
     while (!validInput)
     {
         cout << "--> ";
-        int x;
+        string x;
         if (!(cin >> x))
         {
             cin.clear();
@@ -149,56 +137,66 @@ void welcome()
             cout << "Invalid input. Please enter a number between 1 and 5." << endl;
             continue;
         }
-        if (x == 0)
+        if (x == "0")
         {
             system("cls");
             cout << "Program is terminated.\nHope to see you soon," << Alias << "!" << endl;
             exit(0);
             validInput = true;
         }
-        else if (x == 1)
+        else if (x == "1")
         {
             studentLogin();
             validInput = true;
         }
-        else if (x == 2)
+        else if (x == "2")
         {
             adminLogin();
             validInput = true;
         }
-        else if (x == 3)
+        else if (x == "3")
         {
             createAccount();
             validInput = true;
         }
-        else if (x == 4)
+        else if (x == "4")
         {
             listBooks();
             validInput = true;
         }
-        else if (x == 5)
+        else if (x == "5")
+        {
+            borrowBook();
+            validInput = true;
+        }
+        else if (x == "6")
         {
             addBook();
             validInput = true;
         }
-        else if (x == 6)
+        else if (x == "7")
         {
             searchBook();
             validInput = true;
         }
-        else if (x == 7)
+        else if (x == "8")
         {
             editBook();
             validInput = true;
         }
-        else if (x == 8)
+        else if (x == "9")
         {
             deleteBook();
             validInput = true;
         }
+        else if (x == "00")
+        {
+            logOut();
+            validInput = true;
+        }
         else
         {
-            cout << "Invalid input. Please enter a number between 0 and 8." << endl;
+            cout << "Invalid input. Please enter a number between 0 and 9." << endl;
         }
     }
 }
@@ -365,7 +363,8 @@ void listBooks()
         cout << "===============( " << i + 1 << " )===============" << endl;
         Book book = books[i];
         book.display();
-        // Sleep(250);
+        cout << endl;
+        Sleep(100);
     }
     cout << "Press any key to go to main menu." << endl;
     cout << "--> ";
@@ -374,6 +373,65 @@ void listBooks()
     system("cls");
     welcome();
 };
+/*void borrowBook()
+{
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "               Borrow Book              " << endl;
+    cout << "========================================" << endl;
+    if (loggedInAsStudent)
+    {
+        ifstream fin("data/booklist.csv", ios::in);
+        if (!fin.is_open())
+        {
+            cerr << "Error Opening CSV file" << endl;
+        }
+
+        bool bookFound = false;
+        string line;
+        int bookNum, currentBook = 1;
+        cout << "Enter the book number to borrow: ";
+        cin >> bookNum;
+        cin.ignore();
+        ofstream fout("data/TEMP.csv", ios::app);
+        while (getline(fin, line))
+        {
+            stringstream inputString(line);
+            string title, author, genre, issueDate, returnDate;
+            getline(inputString, title, ',');
+            getline(inputString, author, ',');
+            getline(inputString, genre, ',');
+            getline(inputString, issueDate, ',');
+            getline(inputString, returnDate, '\n');
+
+            // GET Date
+            SYSTEMTIME st;
+            GetSystemTime(&st);
+            int day = st.wDay;
+            int month = st.wMonth;
+            int year = st.wYear;
+            string currentDate = to_string(year) + "-" + to_string(month) + "-" + to_string(day);
+            // GET Date
+
+            if (currentBook == bookNum)
+            {
+                cout << "Selected title: " << title << endl;
+                string username = Alias.substr(0, Alias.size() - 2);
+                cout << "Enter the return date (yyyy-mm-dd): ";
+                getline(cin, returnDate);
+                fout << username << ", " << title << ", " << currentDate << ", " << returnDate << '\n';
+                cout << "Book borrowed successfully." << endl;
+                bookFound = true;
+            }
+            currentBook++;
+        }
+        if (bookFound == false)
+        {
+            cout << "Book not found." << endl;
+        }
+        fin.close();
+    }
+};*/
 void borrowBook()
 {
     system("cls");
@@ -387,6 +445,75 @@ void borrowBook()
         {
             cerr << "Error Opening CSV file" << endl;
         }
+
+        bool bookBorrowed = false;
+        string line;
+        int bookNum, currentBook = 1;
+        cout << "Enter the book number to borrow: ";
+        cin >> bookNum;
+        cin.ignore();
+        ofstream fout("data/TEMP.csv", ios::out);
+
+        string username = Alias.substr(0, Alias.size() - 2);
+        string title, author, genre, issueDate, returnDate;
+
+        while (getline(fin, line))
+        {
+            if (currentBook == bookNum)
+            {
+                cout << "\033[1;43;30mPlease double check everything.\033[0m" << endl;
+                stringstream inputString(line);
+                getline(inputString, title, ',');
+                getline(inputString, author, ',');
+                getline(inputString, genre, ',');
+                getline(inputString, issueDate, ',');
+                getline(inputString, returnDate, ',');
+                // getline(inputString, username, '\n');
+
+                cout << "What's the issue date?(YYYY-MM-DD)\n-->";
+                getline(cin, issueDate);
+                cout << "What's the return date?(YYYY-MM-DD)\n-->";
+                getline(cin, returnDate);
+
+                if (issueDate.empty() && returnDate.empty())
+                {
+                    cout << "You must enter the issue and return date." << endl;
+                    goto L;
+                    // fout << title << ", " << author << ", " << genre << ", " << i << ", " << r << ", " << username << '\n';
+                }
+                else
+                {
+                    fout << title << "," << author << "," << genre << ", " << issueDate << ", " << returnDate << ", " << username << '\n';
+                    bookBorrowed = true;
+                }
+            }
+            else
+            {
+                fout << line << '\n';
+            }
+            currentBook++;
+        }
+        fin.close();
+        fout.close();
+        if (bookBorrowed)
+        {
+            cout << "Book borrowed successfully." << endl;
+            remove("data/booklist.csv");
+            rename("data/TEMP.csv", "data/booklist.csv");
+        }
+        else
+        {
+            cout << "Book not found." << endl;
+        L:
+            remove("data/TEMP.csv");
+        }
+        welcome();
+    }
+    else
+    {
+        cout << "You are not logged in as student." << endl;
+        cout << "Please log in as student to use this function." << endl;
+        mainMenu();
     }
 };
 void addBook()
@@ -435,24 +562,24 @@ void searchBook()
 
     int i = 0;
     string book;
+    bool found = false;
     while (getline(find, book))
     {
         i++;
         if (book.find(target) != string::npos)
         {
             cout << "Found entity at book " << i << ": " << book << endl;
-            // cout << "The 2 dates after #genre are subsequently the #issue & #return date." << endl;
+            found = true;
             break;
         }
     }
 
-    if (i == 0)
+    if (!found)
     {
-        cout << "Target string not found." << endl;
+        cout << "Book not found! Perhaps a typo?" << endl;
     }
     find.close();
 }
-
 void deleteBook()
 {
     cout << "\033[31m========================================" << endl;
@@ -493,26 +620,28 @@ void deleteBook()
             remove("data/booklist.csv");
             rename("data/TEMP.csv", "data/booklist.csv");
             cout << "Book deleted successfully." << endl;
+            mainMenu();
         }
         else
         {
             remove("data/TEMP.csv");
             cout << "Book not found." << endl;
+            mainMenu();
         }
     }
     else
     {
         cout << "You are not logged in as admin." << endl;
+        mainMenu();
     }
 }
-
 void editBook()
 {
     system("cls");
     cout << "========================================" << endl;
     cout << "                Edit Book               " << endl;
     cout << "========================================" << endl;
-    if (loggedInAsAdmin == true)
+    if (loggedInAsAdmin)
     {
         ifstream fin("data/booklist.csv", ios::in);
         if (!fin.is_open())
@@ -587,6 +716,33 @@ void editBook()
         mainMenu();
     }
 };
-void navigate() {
-
+void mainMenu()
+{
+    cout << "Going to main menu in: ";
+    for (int i = 3; i >= 1; i--)
+    {
+        cout << i << "...";
+        Sleep(1000);
+    }
+    cout << endl;
+    system("cls");
+    welcome();
+};
+void logOut()
+{
+    if (Alias == "Guest\n")
+    {
+        cout << "You are not logged in." << endl;
+        cout << "Please log in to use this function." << endl;
+        mainMenu();
+    }
+    else
+    {
+        loggedInAsAdmin = false;
+        loggedInAsStudent = false;
+        Alias = "Guest!\n";
+        system("cls");
+        cout << "Logged out successfully." << endl;
+        mainMenu();
+    }
 };
