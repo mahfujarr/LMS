@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include <limits>
-#include <windows.h>
 #include <sstream>
+#include <windows.h>
 using namespace std;
 
 bool loggedInAsAdmin = false;
@@ -22,7 +22,6 @@ public:
         Genre = genre;
         IssueDate = issueDate;
         ReturnDate = returnDate;
-        // isBorrowed = borrowed;
     };
     void display()
     {
@@ -43,7 +42,6 @@ public:
             bookList << Genre << ", ";
             bookList << IssueDate << ", ";
             bookList << ReturnDate << ", ";
-            // bookList << isBorrowed << endl;
             cout << "Book Added Successfully." << endl;
             bookList.close();
         }
@@ -53,7 +51,6 @@ public:
         }
     }
     ~Book() {
-
     };
 };
 
@@ -116,12 +113,10 @@ void welcome()
     if (loggedInAsAdmin)
     {
         cout << "               Main Menu             (A)" << endl;
-        // cout << " (Administrator)" << endl;
     }
     else if (loggedInAsStudent)
     {
         cout << "               Main Menu             (S)" << endl;
-        // cout << " (Student Account)" << endl;
     }
     else
     {
@@ -145,7 +140,7 @@ void welcome()
 
     while (!validInput)
     {
-        cout << "---> ";
+        cout << "--> ";
         int x;
         if (!(cin >> x))
         {
@@ -373,7 +368,7 @@ void listBooks()
         // Sleep(250);
     }
     cout << "Press any key to go to main menu." << endl;
-    cout << "---> ";
+    cout << "--> ";
     cin.get();
     cin.get();
     system("cls");
@@ -513,6 +508,10 @@ void deleteBook()
 
 void editBook()
 {
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "                Edit Book               " << endl;
+    cout << "========================================" << endl;
     if (loggedInAsAdmin == true)
     {
         ifstream fin("data/booklist.csv", ios::in);
@@ -535,24 +534,28 @@ void editBook()
         {
             if (currentBook == bookNum)
             {
-                cout << "Welcome to the book editing section.\nPlease double check the spellings." << endl;
+                cout << "\033[1;43;30mPlease double check the spellings.\033[0m" << endl;
                 stringstream inputString(line);
                 getline(inputString, title, ',');
                 getline(inputString, author, ',');
                 getline(inputString, genre, ',');
                 getline(inputString, issueDate, ',');
                 getline(inputString, returnDate, '\n');
-                if (issueDate == "")
-                {
-                    issueDate = "NULL";
-                    returnDate = "NULL";
-                }
                 cout << "What's the title?\n-->";
                 getline(cin, title);
                 cout << "Who's the author?\n-->";
                 getline(cin, author);
                 cout << "What's the genre?\n-->";
                 getline(cin, genre);
+                cout << "What's the issue date?\n-->";
+                getline(cin, issueDate);
+                cout << "What's the return date?\n-->";
+                getline(cin, returnDate);
+                if (issueDate == "")
+                {
+                    issueDate = "NULL";
+                    returnDate = "NULL";
+                }
                 fout << title << ", " << author << ", " << genre << ", " << issueDate << ", " << returnDate << '\n';
                 bookFound = true;
             }
@@ -561,14 +564,6 @@ void editBook()
                 fout << line << '\n';
             }
             currentBook++;
-        }
-        if (bookFound)
-        {
-            cout << "Book edited successfully." << endl;
-        }
-        else
-        {
-            cout << "Book not found" << endl;
         }
         fin.close();
         fout.close();
