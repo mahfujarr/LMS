@@ -78,17 +78,7 @@ int main()
 |__/|__/ \__//_/ \__/ \___//_/_/_/\__/  \__/ \___/   /____//_/  /_//___/  )"
          << endl
          << endl;
-    // borrowBook();
     welcome();
-    // studentLogin();
-    // adminLogin();
-    // createAccount();
-    // listBooks();
-    // addBook();
-    // deleteBook();
-    // editBook();
-    // searchBook();
-    // navigate();
 }
 
 void welcome()
@@ -241,7 +231,7 @@ void studentLogin()
                 cout << "Login successful!" << endl;
                 Alias = username + "!\n";
                 cout << "You'll be interacting as: '" << username << "'" << endl;
-                Sleep(2000);
+                // Sleep(2000);
                 mainMenu();
             }
             else
@@ -392,9 +382,12 @@ void borrowBook()
         bool bookBorrowed = false;
         string line;
         int bookNum, currentBook = 1;
-        cout << "Enter the book number to borrow: ";
+        cout << "Enter the book number to borrow" << endl;
+    A:
+        cout << "--> ";
         cin >> bookNum;
         cin.ignore();
+        system("cls");
         ofstream fout("data/TEMP.csv", ios::out);
 
         string username = Alias.substr(0, Alias.size() - 2);
@@ -404,7 +397,6 @@ void borrowBook()
         {
             if (currentBook == bookNum)
             {
-                cout << "\033[1;43;30mPlease double check everything.\033[0m" << endl;
                 stringstream inputString(line);
                 getline(inputString, title, ',');
                 getline(inputString, author, ',');
@@ -413,6 +405,44 @@ void borrowBook()
                 getline(inputString, returnDate, ',');
                 // getline(inputString, username, '\n');
 
+                cout << "---------(Book-" << currentBook << " is selected)--------" << endl;
+                cout << "Title: " << title << endl;
+                cout << "Author: " << author << endl;
+                cout << "Genre: " << genre << endl;
+
+                if (issueDate != " NULL" || returnDate != " NULL")
+                {
+                    cout << "\033[1;31mBook is not available." << endl;
+                    cout << "Please select another book.\033[0m" << endl;
+                    goto A;
+                }
+
+                cout << "\033[1;32mAvailable to borrow.\033[0m" << endl;
+                cout << "----------------------------------------" << endl;
+                cout << "Are you sure you want to borrow this book?" << endl;
+                cout << "1. Yes" << endl;
+                cout << "2. No" << endl;
+                cout << "--> ";
+                string choice;
+                cin >> choice;
+                cin.ignore();
+                if (choice == "2")
+                {
+                    system("cls");
+                    cout << "Book is not borrowed." << endl;
+                    goto L;
+                }
+                else if (choice == "1")
+                {
+                    cout << "Borrowing book..." << endl;
+                }
+                else
+                {
+                    system("cls");
+                    cout << "Invalid input." << endl;
+                    goto L;
+                }
+                cout << "\033[1;43;30mPlease double check everything.\033[0m" << endl;
                 cout << "What's the issue date?(YYYY-MM-DD)\n-->";
                 getline(cin, issueDate);
                 cout << "What's the return date?(YYYY-MM-DD)\n-->";
