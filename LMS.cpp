@@ -42,8 +42,8 @@ public:
             bookList << Title << ", ";
             bookList << Author << ", ";
             bookList << Genre << ", ";
-            // bookList << IssueDate << ", ";
-            // bookList << ReturnDate << ", ";
+            bookList << IssueDate << ", ";
+            bookList << ReturnDate << "\n";
             cout << "Book Added Successfully." << endl;
             bookList.close();
         }
@@ -337,9 +337,6 @@ void createAccount()
 void listBooks()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "             Available Books            " << endl;
-    cout << "========================================" << endl;
     ifstream fin("data/booklist.csv");
     if (!fin.is_open())
     {
@@ -361,15 +358,16 @@ void listBooks()
         Book book(title, author, genre, issueDate, returnDate, username);
         books.push_back(book);
     }
-    system("cls");
-    cout << "Listing all " << books.size() << " books." << endl;
+    cout << "========================================" << endl;
+    cout << "           Available Books (" << books.size() << ")      " << endl;
+    cout << "========================================" << endl;
     for (int i = 0; i < books.size(); i++)
     {
         cout << "===============( " << i + 1 << " )===============" << endl;
         Book book = books[i];
         book.display();
         cout << endl;
-        Sleep(100);
+        // Sleep(250);
     }
     cout << "Press any key to go to main menu." << endl;
     cout << "--> ";
@@ -510,6 +508,7 @@ void addBook()
     cout << "========================================" << endl;
     if (loggedInAsAdmin)
     {
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         string title, author, genre;
         cout << "Welcome to the book adding section.\nPlease double check the spellings." << endl;
         cout << "What's the title?\n-->";
@@ -521,6 +520,7 @@ void addBook()
 
         Book b1(title, author, genre);
         b1.add();
+        mainMenu();
     }
     else
     {
@@ -551,10 +551,24 @@ void searchBook()
     bool found = false;
     while (getline(find, book))
     {
+        stringstream inputString(book);
+        string title, author, genre;
+        getline(inputString, title, ',');
+        getline(inputString, author, ',');
+        getline(inputString, genre, ',');
+        // getline(inputString, issueDate, ',');
+        // getline(inputString, returnDate, ',');
+        // getline(inputString, username, '\n');
         i++;
         if (book.find(target) != string::npos)
         {
-            cout << "Found entity at book " << i << ": " << book << endl;
+            system("cls");
+            cout << "Found entity at book " << i << ":" << endl;
+            cout << "Title: " << title << endl;
+            cout << "Author: " << author << endl;
+            cout << "Genre: " << genre << endl;
+            cout << "----------------------------------------" << endl;
+
             found = true;
             break;
         }
@@ -562,9 +576,11 @@ void searchBook()
 
     if (!found)
     {
+        system("cls");
         cout << "Book not found! Perhaps a typo?" << endl;
     }
     find.close();
+    welcome();
 }
 void deleteBook()
 {
@@ -643,19 +659,26 @@ void editBook()
         cin.ignore();
         ofstream fout("data/TEMP.csv", ios::out);
 
-        string title, author, genre, issueDate, returnDate;
+        string title, author, genre, issueDate, returnDate, username;
 
         while (getline(fin, line))
         {
             if (currentBook == bookNum)
             {
-                cout << "\033[1;43;30mPlease double check the spellings.\033[0m" << endl;
                 stringstream inputString(line);
                 getline(inputString, title, ',');
                 getline(inputString, author, ',');
                 getline(inputString, genre, ',');
                 getline(inputString, issueDate, ',');
-                getline(inputString, returnDate, '\n');
+                getline(inputString, returnDate, ',');
+                getline(inputString, username, '\n');
+                if (username != "NULL")
+                {
+                    cout << "\033[1;31mBook is borrowed by #" << username << ".\nYou can't edit borrowed books.\033[0m" << endl;
+                    Sleep(2000);
+                    mainMenu();
+                }
+                cout << "\033[1;43;30mPlease double check the spellings.\033[0m" << endl;
                 cout << "What's the title?\n-->";
                 getline(cin, title);
                 cout << "Who's the author?\n-->";
