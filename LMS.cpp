@@ -294,6 +294,19 @@ void createAccount()
 
         cout << "Please enter student's ID: ";
         cin >> ID;
+        ifstream fin("data/credentials.txt");
+        string line;
+        while (getline(fin, line))
+        {
+            istringstream iss(line);
+            string username, password;
+            iss >> username >> password;
+            if (username == ID)
+            {
+                cout << "ID already exists." << endl;
+                mainMenu();
+            }
+        }
         ofstream cred("data/credentials.txt", ios::app);
         if (cred.is_open())
         {
