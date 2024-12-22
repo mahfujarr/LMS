@@ -14,14 +14,15 @@ string Alias = "Guest!\n";
 class Book
 {
 public:
-    string Title, Author, Genre, IssueDate, ReturnDate;
-    Book(string title = "NULL", string author = "NULL", string genre = "NULL", string issueDate = "NULL", string returnDate = "NULL")
+    string Title, Author, Genre, IssueDate, ReturnDate, Student;
+    Book(string title = "NULL", string author = "NULL", string genre = "NULL", string issueDate = "NULL", string returnDate = "NULL", string username = "")
     {
         Title = title;
         Author = author;
         Genre = genre;
         IssueDate = issueDate;
         ReturnDate = returnDate;
+        Student = username;
     };
     void display()
     {
@@ -31,6 +32,7 @@ public:
         cout << "Issue Date: " << IssueDate << endl;
         cout << "Return Date: " << ReturnDate << endl;
         cout << "Availability: " << (IssueDate != " NULL" || ReturnDate != " NULL" ? "Not Available" : "Available") << endl;
+        cout << "Borrowed by: " << (IssueDate != " NULL" || ReturnDate != " NULL" ? Student : "NONE") << endl;
     }
     void add()
     {
@@ -40,8 +42,8 @@ public:
             bookList << Title << ", ";
             bookList << Author << ", ";
             bookList << Genre << ", ";
-            bookList << IssueDate << ", ";
-            bookList << ReturnDate << ", ";
+            // bookList << IssueDate << ", ";
+            // bookList << ReturnDate << ", ";
             cout << "Book Added Successfully." << endl;
             bookList.close();
         }
@@ -345,15 +347,15 @@ void listBooks()
     while (getline(fin, line))
     {
         stringstream inputString(line);
-        string title, author, genre, issueDate, returnDate, isBorrowed;
+        string title, author, genre, issueDate, returnDate, isBorrowed, username;
         getline(inputString, title, ',');
         getline(inputString, author, ',');
         getline(inputString, genre, ',');
         getline(inputString, issueDate, ',');
-        getline(inputString, returnDate, '\n');
-        // getline(inputString, isBorrowed, '\n');
+        getline(inputString, returnDate, ',');
+        getline(inputString, username, '\n');
 
-        Book book(title, author, genre, issueDate, returnDate);
+        Book book(title, author, genre, issueDate, returnDate, username);
         books.push_back(book);
     }
     system("cls");
@@ -373,65 +375,6 @@ void listBooks()
     system("cls");
     welcome();
 };
-/*void borrowBook()
-{
-    system("cls");
-    cout << "========================================" << endl;
-    cout << "               Borrow Book              " << endl;
-    cout << "========================================" << endl;
-    if (loggedInAsStudent)
-    {
-        ifstream fin("data/booklist.csv", ios::in);
-        if (!fin.is_open())
-        {
-            cerr << "Error Opening CSV file" << endl;
-        }
-
-        bool bookFound = false;
-        string line;
-        int bookNum, currentBook = 1;
-        cout << "Enter the book number to borrow: ";
-        cin >> bookNum;
-        cin.ignore();
-        ofstream fout("data/TEMP.csv", ios::app);
-        while (getline(fin, line))
-        {
-            stringstream inputString(line);
-            string title, author, genre, issueDate, returnDate;
-            getline(inputString, title, ',');
-            getline(inputString, author, ',');
-            getline(inputString, genre, ',');
-            getline(inputString, issueDate, ',');
-            getline(inputString, returnDate, '\n');
-
-            // GET Date
-            SYSTEMTIME st;
-            GetSystemTime(&st);
-            int day = st.wDay;
-            int month = st.wMonth;
-            int year = st.wYear;
-            string currentDate = to_string(year) + "-" + to_string(month) + "-" + to_string(day);
-            // GET Date
-
-            if (currentBook == bookNum)
-            {
-                cout << "Selected title: " << title << endl;
-                string username = Alias.substr(0, Alias.size() - 2);
-                cout << "Enter the return date (yyyy-mm-dd): ";
-                getline(cin, returnDate);
-                fout << username << ", " << title << ", " << currentDate << ", " << returnDate << '\n';
-                cout << "Book borrowed successfully." << endl;
-                bookFound = true;
-            }
-            currentBook++;
-        }
-        if (bookFound == false)
-        {
-            cout << "Book not found." << endl;
-        }
-        fin.close();
-    }
-};*/
 void borrowBook()
 {
     system("cls");
