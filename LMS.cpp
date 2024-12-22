@@ -481,6 +481,7 @@ void borrowBook()
         fout.close();
         if (bookBorrowed)
         {
+            system("cls");
             cout << "Book borrowed successfully." << endl;
             remove("data/booklist.csv");
             rename("data/TEMP.csv", "data/booklist.csv");
