@@ -972,7 +972,7 @@ Thank you for using my program.
 Hope to see you soon!
 
 I dont know Why I am writing this comment.
-Maybe to have exactly 1000 lines of code.
+Maybe to have exactly 1000 lines.
 Who knows?
 
 
