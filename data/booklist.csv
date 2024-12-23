@@ -1,40 +1,40 @@
-Depths of Solitude, J. Harper, Adventure, NULL, NULL
-The Wandering Earth, C. Liu, Thriller, NULL, NULL
-Falling Stars, J. Harper, Historical Fiction, NULL, NULL
-The Shattered Crown, O. Quinn, Fantasy, NULL, NULL
-The Crimson Path, M. Vega, Horror, NULL, NULL
-The Crimson Path, R. Woods, Drama, NULL, NULL
-The Ironclad Oath, D. Winters, Historical Fiction, NULL, NULL
-Depths of Solitude, J. Harper, Romance, NULL, NULL
-Eternal Sunrise, H. Acker, Fantasy, NULL, NULL
-The Shattered Crown, O. Quinn, Thriller, NULL, NULL
-Echoes of Eternity, U. Clark, Mystery, NULL, NULL
-Shadows of the Moon, V. Knight, Dystopian, NULL, NULL
-The Last Horizon, S. Hawthorne, Science Fiction, NULL, NULL
-Paths Untrodden, L. Stone, Horror, NULL, NULL
-Paths Untrodden, R. Woods, Historical Fiction, NULL, NULL
-The Ironclad Oath, S. Hawthorne, Adventure, NULL, NULL
-Falling Stars, R. Woods, Adventure, NULL, NULL
-Paths Untrodden, M. Vega, Adventure, NULL, NULL
-Falling Stars, M. Vega, Fantasy, NULL, NULL
-Shadows of the Moon, J. Harper, Horror, NULL, NULL
-The Alchemist, Paolo Coelho, Fiction, NULL, NULL
-Object-Oriented Programming with C++, E Balagurusamy, Academic, NULL, NULL
-The Da Vinci Code, Dan Brown, Fiction, NULL, NULL
-The Silent Patient, Alex Michaelides, Thriller, NULL, NULL
-Where the Crawdads Sing, Delia Owens, Mystery, NULL, NULL
-Becoming, Michelle Obama, Biography, NULL, NULL
-Educated, Tara Westover, Memoir, NULL, NULL
-The Night Circus, Erin Morgenstern, Fantasy, NULL, NULL
-The Goldfinch, Donna Tartt, Fiction, NULL, NULL
-The Road, Cormac McCarthy, Dystopian, NULL, NULL
-Sapiens, Yuval Noah Harari, Non-Fiction, NULL, NULL
-The Catcher in the Rye, J.D. Salinger, Fiction, NULL, NULL
-1984, George Orwell, Dystopian, NULL, NULL
-The Great Gatsby, F. Scott Fitzgerald, Fiction, NULL, NULL
-The Silent Patient, Alex Michaelides, Thriller, NULL, NULL
-Where the Crawdads Sing, Delia Owens, Mystery, NULL, NULL
-Becoming, Michelle Obama, Biography, NULL, NULL
-Educated, Tara Westover, Memoir, NULL, NULL
-The Night Circus, Erin Morgenstern, Fantasy, NULL, NULL
-The Goldfinch, Donna Tartt, Fiction, NULL, NULL
+Depths of Solitude, J. Harper, Adventure, NULL, NULL, ,0
+The Wandering Earth, C. Liu, Thriller, NULL, NULL, ,0
+Falling Stars, J. Harper, Historical Fiction, NULL, NULL, ,0
+The Shattered Crown, O. Quinn, Fantasy, NULL, NULL, ,0
+The Crimson Path, M. Vega, Horror, NULL, NULL, ,0
+The Crimson Path, R. Woods, Drama, NULL, NULL, ,0
+The Ironclad Oath, D. Winters, Historical Fiction, NULL, NULL, ,0
+Depths of Solitude, J. Harper, Romance, NULL, NULL, ,0
+Eternal Sunrise, H. Acker, Fantasy, NULL, NULL, ,3
+The Shattered Crown, O. Quinn, Thriller, NULL, NULL, ,0
+Echoes of Eternity, U. Clark, Mystery, NULL, NULL, ,0
+Shadows of the Moon, V. Knight, Dystopian, NULL, NULL, ,0
+The Last Horizon, S. Hawthorne, Science Fiction, NULL, NULL, ,0
+Paths Untrodden, L. Stone, Horror, NULL, NULL, ,0
+Paths Untrodden, R. Woods, Historical Fiction, NULL, NULL, ,0
+The Ironclad Oath, S. Hawthorne, Adventure, NULL, NULL, ,0
+Falling Stars, R. Woods, Adventure, NULL, NULL, ,0
+Paths Untrodden, M. Vega, Adventure, NULL, NULL, ,0
+Falling Stars, M. Vega, Fantasy, NULL, NULL, ,0
+Shadows of the Moon, J. Harper, Horror, NULL, NULL, ,0
+The Alchemist, Paolo Coelho, Fiction, 2025, 2026, 23303151,1
+Object-Oriented Programming with C++, E Balagurusamy, Academic, NULL, NULL, ,0
+The Da Vinci Code, Dan Brown, Fiction, NULL, NULL, ,0
+The Silent Patient, Alex Michaelides, Thriller, NULL, NULL, ,0
+Where the Crawdads Sing, Delia Owens, Mystery, NULL, NULL, ,0
+Becoming, Michelle Obama, Biography, NULL, NULL, ,0
+Educated, Tara Westover, Memoir, NULL, NULL, ,0
+The Night Circus, Erin Morgenstern, Fantasy, NULL, NULL, ,0
+The Goldfinch, Donna Tartt, Fiction, NULL, NULL, ,0
+The Road, Cormac McCarthy, Dystopian, NULL, NULL, ,0
+Sapiens, Yuval Noah Harari, Non-Fiction, NULL, NULL, ,0
+The Catcher in the Rye, J.D. Salinger, Fiction, NULL, NULL, ,0
+1984, George Orwell, Dystopian, NULL, NULL, ,0
+The Great Gatsby, F. Scott Fitzgerald, Fiction, NULL, NULL, ,0
+The Silent Patient, Alex Michaelides, Thriller, NULL, NULL, ,0
+Where the Crawdads Sing, Delia Owens, Mystery, NULL, NULL, ,0
+Becoming, Michelle Obama, Biography, NULL, NULL, ,0
+Educated, Tara Westover, Memoir, NULL, NULL, ,0
+The Night Circus, Erin Morgenstern, Fantasy, NULL, NULL, ,0
+The Goldfinch, Donna Tartt, Fiction, NULL, NULL, ,0

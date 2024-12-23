@@ -3,3 +3,5 @@ lms.exe
 LMS.o
 data/credentials.txt
 data/booklist.csv
+data/TEMP.csv
+data/booklist.csv
