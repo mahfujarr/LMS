@@ -453,7 +453,7 @@ void borrowBook()
                     cout << "Invalid input." << endl;
                     goto L;
                 }
-                cout << "\033[1;43;30mPlease double check everything.\033[0m" << endl;
+                cout << "\033[1;33mPlease double check everything.\033[0m" << endl;
                 cout << "What's the issue date?(YYYY-MM-DD)\n-->";
                 getline(cin, issueDate);
                 cout << "What's the return date?(YYYY-MM-DD)\n-->";

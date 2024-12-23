@@ -2,3 +2,4 @@ lms.exe
 .vscode/settings.json
 LMS.o
 data/credentials.txt
+data/booklist.csv
