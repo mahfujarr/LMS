@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <limits>
 #include <sstream>
 #include <windows.h>
 using namespace std;
@@ -76,12 +75,43 @@ void mainMenu();
 int main()
 {
     system("cls");
-    cout << R"( _      __      __                        __            __    __  ___ ____
-| | /| / /___  / /____ ___   __ _  ___   / /_ ___      / /   /  |/  // __/
-| |/ |/ // -_)/ // __// _ \ /  ' \/ -_) / __// _ \    / /__ / /|_/ /_\ \  
-|__/|__/ \__//_/ \__/ \___//_/_/_/\__/  \__/ \___/   /____//_/  /_//___/  )"
-         << endl
+    cout << R"(____    __    ____  _______  __        ______   ______   .___  ___.  _______    .___________.  ______  
+\   \  /  \  /   / |   ____||  |      /      | /  __  \  |   \/   | |   ____|   |           | /  __  \ 
+ \   \/    \/   /  |  |__   |  |     |  ,----'|  |  |  | |  \  /  | |  |__      `---|  |----`|  |  |  |
+  \            /   |   __|  |  |     |  |     |  |  |  | |  |\/|  | |   __|         |  |     |  |  |  |
+   \    /\    /    |  |____ |  `----.|  `----.|  `--'  | |  |  |  | |  |____        |  |     |  `--'  |
+    \__/  \__/     |_______||_______| \______| \______/  |__|  |__| |_______|       |__|      \______/ )"
          << endl;
+    Sleep(1000);
+    // system("cls");
+    cout << R"( __       __  .______   .______          ___      .______     ____    ____
+|  |     |  | |   _  \  |   _  \        /   \     |   _  \    \   \  /   /
+|  |     |  | |  |_)  | |  |_)  |      /  ^  \    |  |_)  |    \   \/   / 
+|  |     |  | |   _  <  |      /      /  /_\  \   |      /      \_    _/  
+|  `----.|  | |  |_)  | |  |\  \----./  _____  \  |  |\  \----.   |  |    
+|_______||__| |______/  | _| `._____/__/     \__\ | _| `._____|   |__|    )"
+         << endl;
+    Sleep(1000);
+    // system("cls");
+    cout << R"(.___  ___.      ___      .__   __.      ___       _______  _______ .___  ___.  _______ .__   __. .___________.
+|   \/   |     /   \     |  \ |  |     /   \     /  _____||   ____||   \/   | |   ____||  \ |  | |           |
+|  \  /  |    /  ^  \    |   \|  |    /  ^  \   |  |  __  |  |__   |  \  /  | |  |__   |   \|  | `---|  |----`
+|  |\/|  |   /  /_\  \   |  . `  |   /  /_\  \  |  | |_ | |   __|  |  |\/|  | |   __|  |  . `  |     |  |     
+|  |  |  |  /  _____  \  |  |\   |  /  _____  \ |  |__| | |  |____ |  |  |  | |  |____ |  |\   |     |  |     
+|__|  |__| /__/     \__\ |__| \__| /__/     \__\ \______| |_______||__|  |__| |_______||__| \__|     |__|     )"
+         << endl;
+    Sleep(1000);
+    // system("cls");
+    cout << R"(     _______.____    ____  _______.___________. _______ .___  ___.
+    /       |\   \  /   / /       |           ||   ____||   \/   |
+   |   (----` \   \/   / |   (----`---|  |----`|  |__   |  \  /  |
+    \   \      \_    _/   \   \       |  |     |   __|  |  |\/|  |
+.----)   |       |  | .----)   |      |  |     |  |____ |  |  |  |
+|_______/        |__| |_______/       |__|     |_______||__|  |__|)"
+         << endl;
+    Sleep(1000);
+    system("cls");
+
     welcome();
 }
 
@@ -92,29 +122,29 @@ void welcome()
         cout << "\033[1,36mHello, " << Alias << "\033[0m";
         (Alias == "Guest!\n" ? cout << "" << endl : cout << "                               00.\033[31mLogout\033[0m" << endl);
     }
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
-        cout << "               Main Menu             (A)" << endl;
+        cout << "\033[1;36m               Main Menu             (A)\033[0m" << endl;
     }
     else if (loggedInAsStudent)
     {
-        cout << "               Main Menu             (S)" << endl;
+        cout << "\033[1;36m               Main Menu             (S)\033[0m" << endl;
     }
     else
     {
-        cout << "               Main Menu             (G)" << endl;
+        cout << "\033[1;36m               Main Menu             (G)\033[0m" << endl;
     }
-    cout << "========================================" << endl;
-    cout << "Press any available option to begin: " << endl;
-    cout << "----------------------------------------" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[2mPress any available option to begin: " << endl;
+    cout << "----------------------------------------\033[0m" << endl;
     cout << "1. \033[1;32mLogin as student\033[0m" << endl;
     cout << "2. \033[1;32mLogin as admin\033[0m" << endl;
     cout << "3. \033[1;32mSearch Books\033[0m" << endl;
     cout << "4. \033[1;32mList all books\033[0m" << endl;
     if (loggedInAsStudent || loggedInAsAdmin)
     {
-        cout << "5. " << (loggedInAsAdmin ? "Borrow Book" : "\033[1;32mBorrow Book\033[0m") << endl;
+        cout << "5. " << (loggedInAsAdmin ? "\033[2mBorrow Book\033[0m" : "\033[1;32mBorrow Book\033[0m") << endl;
     }
     if (loggedInAsAdmin)
     {
@@ -136,15 +166,15 @@ void welcome()
         string x;
         if (!(cin >> x))
         {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin.ignore();
+            cin.ignore();
             cout << "Invalid input. Please enter a number between 1 and 5." << endl;
             continue;
         }
         if (x == "0")
         {
             system("cls");
-            cout << "Program is terminated.\nHope to see you soon," << Alias << "!" << endl;
+            cout << "Program is terminated.\nHope to see you soon," << Alias << endl;
             exit(0);
             validInput = true;
         }
@@ -217,9 +247,9 @@ void welcome()
 void studentLogin()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "              Student Login             " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m              Student Login             \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     loggedInAsAdmin = false;
     string ID, pass, line;
     ifstream cred("data/credentials.txt");
@@ -275,9 +305,9 @@ void studentLogin()
 void adminLogin()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "               Admin Login              " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m               Admin Login              \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     loggedInAsStudent = false;
     string pass;
     cout << "Please enter the admin password: ";
@@ -300,9 +330,9 @@ void adminLogin()
 void createAccount()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "        Create new student account      " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m        Create new student account      \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
         string ID, pass;
@@ -344,8 +374,8 @@ void createAccount()
     else
     {
         // system("cls");
-        cout << "You are not logged in as admin." << endl;
-        cout << "Please log in as admin to use this function." << endl;
+        cout << "\033[1;31mYou are not logged in as admin." << endl;
+        cout << "Please log in as admin to use this function.\033[0m" << endl;
         mainMenu();
     }
 };
@@ -375,9 +405,9 @@ void listBooks()
         Book book(title, author, genre, issueDate, returnDate, username);
         books.push_back(book);
     }
-    cout << "========================================" << endl;
-    cout << "           Available Books (" << books.size() << ")      " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m           Available Books (" << books.size() << ")      \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     for (int i = 0; i < books.size(); i++)
     {
         cout << "===============( " << i + 1 << " )===============" << endl;
@@ -396,9 +426,9 @@ void listBooks()
 void borrowBook()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "               Borrow Book              " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m               Borrow Book              \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsStudent)
     {
         ifstream fin("data/booklist.csv", ios::in);
@@ -408,10 +438,10 @@ void borrowBook()
         }
 
         bool bookBorrowed = false;
+        bool coutNotAvailable = false;
         string line;
         int bookNum, currentBook = 1;
         cout << "Enter the book number to borrow" << endl;
-    A:
         cout << "--> ";
         cin >> bookNum;
         cin.ignore();
@@ -444,7 +474,12 @@ void borrowBook()
                 {
                     cout << "\033[1;31mBook is not available." << endl;
                     cout << "Please select another book.\033[0m" << endl;
-                    goto A;
+                    // bool coutNotAvailable = true;
+                    cout << "Press any key to go to main menu." << endl;
+                    cout << "--> ";
+                    cin.get();
+                    system("cls");
+                    welcome();
                 }
 
                 cout << "\033[1;32mAvailable to borrow.\033[0m" << endl;
@@ -459,8 +494,9 @@ void borrowBook()
                 if (choice == "2")
                 {
                     system("cls");
-                    cout << "Book is not borrowed." << endl;
-                    goto L;
+                    cout << "\033[1;31mBook is not borrowed.\033[0m" << endl;
+                    coutNotAvailable = true;
+                    break;
                 }
                 else if (choice == "1")
                 {
@@ -470,19 +506,19 @@ void borrowBook()
                 {
                     system("cls");
                     cout << "Invalid input." << endl;
-                    goto L;
                 }
-                cout << "\033[1;33mPlease double check everything.\033[0m" << endl;
-                cout << "What's the issue date?(YYYY-MM-DD)\n-->";
+                cout << "\033[1;33mPlease double check the dates to avoid fines.\033[0m" << endl;
+                cout << "What's the issue date?(DD-MM-YYYY)\n-->";
                 getline(cin, issueDate);
-                cout << "What's the return date?(YYYY-MM-DD)\n-->";
+                cout << "What's the return date?(DD-MM-YYYY)\n-->";
                 getline(cin, returnDate);
 
-                if (issueDate.empty() && returnDate.empty())
+                if (issueDate.empty() || returnDate.empty())
                 {
-                    cout << "You must enter the issue and return date." << endl;
-                    goto L;
-                    // fout << title << ", " << author << ", " << genre << ", " << i << ", " << r << ", " << username << '\n';
+                    system("cls");
+                    cout << "\033[1;31mYou must enter the issue and return date." << endl;
+                    cout << "Book is not borrowed.\033[0m" << endl;
+                    coutNotAvailable = true;
                 }
                 else
                 {
@@ -499,25 +535,24 @@ void borrowBook()
         }
         fin.close();
         fout.close();
-        if (bookBorrowed)
+        if (bookBorrowed == true)
         {
             system("cls");
-            cout << "Book borrowed successfully." << endl;
+            cout << "\033[1;32mBook borrowed successfully.\033[0m" << endl;
             remove("data/booklist.csv");
             rename("data/TEMP.csv", "data/booklist.csv");
         }
         else
         {
-            cout << "Book not found." << endl;
-        L:
+            cout << ((coutNotAvailable) ? "" : "\033[1;31mBook not found.\033[0m") << endl;
             remove("data/TEMP.csv");
         }
-        welcome();
+        mainMenu();
     }
     else
     {
-        cout << "You are not logged in as student." << endl;
-        cout << "Please log in as student to use this function." << endl;
+        cout << "\033[1;31mYou are not logged in as student." << endl;
+        cout << "Please log in as student to use this function.\033[0m" << endl;
         mainMenu();
     }
 };
@@ -526,9 +561,9 @@ void returnBook()
     if (loggedInAsAdmin)
     {
         system("cls");
-        cout << "========================================" << endl;
-        cout << "               Return Book              " << endl;
-        cout << "========================================" << endl;
+        cout << "\033[1;36m========================================\033[0m" << endl;
+        cout << "\033[1;36m               Return Book              \033[0m" << endl;
+        cout << "\033[1;36m========================================\033[0m" << endl;
         ifstream fin("data/booklist.csv", ios::in);
         if (!fin.is_open())
         {
@@ -596,7 +631,7 @@ void returnBook()
         }
         fin.close();
         fout.close();
-        if (bookReturned)
+        if (bookReturned == true)
         {
             cout << "Book returned successfully." << endl;
             remove("data/booklist.csv");
@@ -611,20 +646,20 @@ void returnBook()
     }
     else
     {
-        cout << "You are not logged in as admin." << endl;
-        cout << "Please log in as admin to use this function." << endl;
+        cout << "\033[1;31mYou are not logged in as admin." << endl;
+        cout << "Please log in as admin to use this function.\033[0m" << endl;
         mainMenu();
     }
 };
 void addBook()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "                 Add Book               " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m                 Add Book               \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cin.ignore();
         string title, author, genre;
         cout << "Welcome to the book adding section.\nPlease double check the spellings." << endl;
         cout << "What's the title?\n-->";
@@ -640,24 +675,24 @@ void addBook()
     }
     else
     {
-        cout << "You are not logged in as admin." << endl;
-        cout << "Please log in as admin to use this function." << endl;
+        cout << "\033[1;31mYou are not logged in as admin." << endl;
+        cout << "Please log in as admin to use this function.\033[0m" << endl;
         mainMenu();
     }
 };
 void searchBook()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "               Book Search              " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m               Book Search              \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     ifstream find("data/booklist.csv");
     if (!find.is_open())
     {
         cerr << "Error opening file: booklist.csv" << endl;
         return;
     }
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore();
     string target;
     cout << "Enter the book title, author, or genre to search: ";
     getline(cin, target);
@@ -672,9 +707,6 @@ void searchBook()
         getline(inputString, title, ',');
         getline(inputString, author, ',');
         getline(inputString, genre, ',');
-        // getline(inputString, issueDate, ',');
-        // getline(inputString, returnDate, ',');
-        // getline(inputString, username, '\n');
         i++;
         if (book.find(target) != string::npos)
         {
@@ -693,7 +725,7 @@ void searchBook()
     if (!found)
     {
         system("cls");
-        cout << "Book not found! Perhaps a typo?" << endl;
+        cout << "\033[1;31mBook not found!\n\033[1;33mPerhaps a typo?\033[0m" << endl;
     }
     find.close();
     welcome();
@@ -734,7 +766,7 @@ void deleteBook()
         fin.close();
         fout.close();
 
-        if (bookFound)
+        if (bookFound == true)
         {
             remove("data/booklist.csv");
             rename("data/TEMP.csv", "data/booklist.csv");
@@ -750,19 +782,21 @@ void deleteBook()
     }
     else
     {
-        cout << "You are not logged in as admin." << endl;
+        cout << "\033[1;31mYou are not logged in as admin." << endl;
+        cout << "Please log in as admin to use this function.\033[0m" << endl;
         mainMenu();
     }
 }
 void editBook()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "                Edit Book               " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m                Edit Book               \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
         ifstream fin("data/booklist.csv", ios::in);
+        ofstream fout("data/TEMP.csv", ios::out);
         if (!fin.is_open())
         {
             cerr << "Error Opening CSV file" << endl;
@@ -774,7 +808,6 @@ void editBook()
         cout << "Enter the book number to edit: ";
         cin >> bookNum;
         cin.ignore();
-        ofstream fout("data/TEMP.csv", ios::out);
 
         string title, author, genre, issueDate, returnDate, username, borrowTimes;
 
@@ -803,25 +836,14 @@ void editBook()
                 cout << "Issue Date: " << issueDate << endl;
                 cout << "Return Date: " << returnDate << endl;
                 cout << "----------------------------------------" << endl;
-                cout << "\033[1;43;30mPlease double check the spellings.\033[0m" << endl;
+                cout << "\033[1;30mPlease double check the spellings.\033[0m" << endl;
                 cout << "What's the title?\n-->";
                 getline(cin, title);
                 cout << "Who's the author?\n-->";
                 getline(cin, author);
                 cout << "What's the genre?\n-->";
                 getline(cin, genre);
-                cout << "What's the issue date?\n-->";
-                getline(cin, issueDate);
-                cout << "What's the return date?\n-->";
-                getline(cin, returnDate);
-                if (issueDate == "")
-                {
-                    issueDate = "NULL";
-                }
-                if (returnDate == "")
-                {
-                    returnDate = "NULL";
-                }
+
                 fout << title << ", " << author << ", " << genre << ", " << issueDate << ", " << returnDate << ", " << "" << "," << borrowTimes << '\n';
                 bookFound = true;
             }
@@ -833,7 +855,8 @@ void editBook()
         }
         fin.close();
         fout.close();
-        if (bookFound)
+
+        if (bookFound == true)
         {
             system("cls");
             cout << "Book edited successfully." << endl;
@@ -849,17 +872,17 @@ void editBook()
     }
     else
     {
-        cout << "You are not logged in as admin." << endl;
-        cout << "Please log in as admin to use this function." << endl;
+        cout << "\033[1;31mYou are not logged in as admin." << endl;
+        cout << "Please log in as admin to use this function.\033[0m" << endl;
         mainMenu();
     }
 };
 void report()
 {
     system("cls");
-    cout << "========================================" << endl;
-    cout << "                 Report                 " << endl;
-    cout << "========================================" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
+    cout << "\033[1;36m                 Report                 \033[0m" << endl;
+    cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
         ifstream fin("data/booklist.csv", ios::in);
@@ -920,12 +943,13 @@ void report()
 };
 void mainMenu()
 {
-    cout << "Going to main menu in: ";
+    cout << "\033[2mGoing to main menu in: ";
     for (int i = 3; i >= 1; i--)
     {
         cout << i << "...";
         Sleep(1000);
     }
+    cout << "\033[0m";
     cout << endl;
     system("cls");
     welcome();
@@ -967,17 +991,13 @@ void logOut()
 
 
 
-This is the end of the program.
+This is the end.
 Thank you for using my program.
 Hope to see you soon!
 
 I dont know Why I am writing this comment.
 Maybe to have exactly 1000 lines.
 Who knows?
-
-
-
-
 
 
 
