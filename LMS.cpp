@@ -50,7 +50,7 @@ public:
         }
         else
         {
-            cout << "Error opening the file 'booklist.txt'" << endl;
+            cout << "Error opening the file 'booklist.csv'" << endl;
         }
     }
     ~Book() {
@@ -836,7 +836,7 @@ void editBook()
                 cout << "Issue Date: " << issueDate << endl;
                 cout << "Return Date: " << returnDate << endl;
                 cout << "----------------------------------------" << endl;
-                cout << "\033[1;30mPlease double check the spellings.\033[0m" << endl;
+                cout << "\033[1;33mPlease double check the spellings.\033[0m" << endl;
                 cout << "What's the title?\n-->";
                 getline(cin, title);
                 cout << "Who's the author?\n-->";
@@ -844,7 +844,7 @@ void editBook()
                 cout << "What's the genre?\n-->";
                 getline(cin, genre);
 
-                fout << title << ", " << author << ", " << genre << ", " << issueDate << ", " << returnDate << ", " << "" << "," << borrowTimes << '\n';
+                fout << title << ", " << author << ", " << genre << "," << issueDate << "," << returnDate << ", " << "" << "," << borrowTimes << '\n';
                 bookFound = true;
             }
             else
