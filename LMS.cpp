@@ -539,13 +539,22 @@ void borrowBook()
         {
             system("cls");
             cout << "\033[1;32mBook borrowed successfully.\033[0m" << endl;
-            remove("data/booklist.csv");
-            rename("data/TEMP.csv", "data/booklist.csv");
+            if (remove("data/booklist.csv") != 0)
+            {
+                cerr << "Error deleting file: booklist.csv" << endl;
+            }
+            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            {
+                cerr << "Error renaming file: TEMP.csv" << endl;
+            }
         }
         else
         {
             cout << ((coutNotAvailable) ? "" : "\033[1;31mBook not found.\033[0m") << endl;
-            remove("data/TEMP.csv");
+            if (remove("data/TEMP.csv") != 0)
+            {
+                cerr << "Error deleting file: TEMP.csv" << endl;
+            }
         }
         mainMenu();
     }
@@ -634,15 +643,24 @@ void returnBook()
         if (bookReturned == true)
         {
             cout << "Book returned successfully." << endl;
-            remove("data/booklist.csv");
-            rename("data/TEMP.csv", "data/booklist.csv");
+            if (remove("data/booklist.csv") != 0)
+            {
+                cerr << "Error deleting file: booklist.csv" << endl;
+            }
+            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            {
+                cerr << "Error renaming file: TEMP.csv" << endl;
+            }
         }
         else
         {
             cout << "Book not found." << endl;
-            remove("data/TEMP.csv");
+            if (remove("data/TEMP.csv") != 0)
+            {
+                cerr << "Error deleting file: TEMP.csv" << endl;
+            }
         }
-        welcome();
+        mainMenu();
     }
     else
     {
@@ -768,17 +786,25 @@ void deleteBook()
 
         if (bookFound == true)
         {
-            remove("data/booklist.csv");
-            rename("data/TEMP.csv", "data/booklist.csv");
             cout << "Book deleted successfully." << endl;
-            mainMenu();
+            if (remove("data/booklist.csv") != 0)
+            {
+                cerr << "Error deleting file: booklist.csv" << endl;
+            }
+            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            {
+                cerr << "Error renaming file: TEMP.csv" << endl;
+            }
         }
         else
         {
-            remove("data/TEMP.csv");
+            if (remove("data/TEMP.csv") != 0)
+            {
+                cerr << "Error deleting file: TEMP.csv" << endl;
+            }
             cout << "Book not found." << endl;
-            mainMenu();
         }
+        mainMenu();
     }
     else
     {
@@ -860,15 +886,24 @@ void editBook()
         {
             system("cls");
             cout << "Book edited successfully." << endl;
-            remove("data/booklist.csv");
-            rename("data/TEMP.csv", "data/booklist.csv");
+            if (remove("data/booklist.csv") != 0)
+            {
+                cerr << "Error deleting file: booklist.csv" << endl;
+            }
+            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            {
+                cerr << "Error renaming file: TEMP.csv" << endl;
+            }
         }
         else
         {
             cout << "Book not found." << endl;
-            remove("data/TEMP.csv");
+            if (remove("data/TEMP.csv") != 0)
+            {
+                cerr << "Error deleting file: TEMP.csv" << endl;
+            }
         }
-        welcome();
+        mainMenu();
     }
     else
     {
@@ -973,48 +1008,3 @@ void logOut()
         mainMenu();
     }
 };
-/*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-This is the end.
-Thank you for using my program.
-Hope to see you soon!
-
-I dont know Why I am writing this comment.
-Maybe to have exactly 1000 lines.
-Who knows?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
