@@ -61,5 +61,20 @@ The Library Management System (LMS) is a console-based application written in C+
 2. Run the compiled executable to start the Library Management System.
 3. Follow the on-screen instructions to log in, manage books, and generate reports.
 
+### Usage Examples
+1. **Logging in as a Student**:
+   - Select option `1` from the main menu.
+   - Enter your student ID and password.
+
+2. **Borrowing a Book**:
+   - Log in as a student.
+   - Select option `5` from the main menu.
+   - Enter the book number to borrow.
+   - Specify the issue and return dates.
+
+3. **Generating a Report**:
+   - Log in as an admin.
+   - Type `report` in the main menu to generate a report of the library's inventory.
+
 ### Conclusion
 The Library Management System provides a comprehensive solution for managing a library's book inventory, supporting both student and administrator roles. The system ensures efficient book management and easy access to library resources.
