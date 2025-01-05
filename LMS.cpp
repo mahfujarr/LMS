@@ -79,12 +79,14 @@ void mainMenu();
 int main()
 {
     system("cls");
+    cout << "\033[1m";
     cout << R"(____    __    ____  _______  __        ______   ______   .___  ___.  _______    .___________.  ______  
 \   \  /  \  /   / |   ____||  |      /      | /  __  \  |   \/   | |   ____|   |           | /  __  \ 
  \   \/    \/   /  |  |__   |  |     |  ,----'|  |  |  | |  \  /  | |  |__      `---|  |----`|  |  |  |
   \            /   |   __|  |  |     |  |     |  |  |  | |  |\/|  | |   __|         |  |     |  |  |  |
    \    /\    /    |  |____ |  `----.|  `----.|  `--'  | |  |  |  | |  |____        |  |     |  `--'  |
     \__/  \__/     |_______||_______| \______| \______/  |__|  |__| |_______|       |__|      \______/ )"
+         << endl
          << endl;
     Sleep(1000);
     // system("cls");
@@ -94,6 +96,7 @@ int main()
 |  |     |  | |   _  <  |      /      /  /_\  \   |      /      \_    _/  
 |  `----.|  | |  |_)  | |  |\  \----./  _____  \  |  |\  \----.   |  |    
 |_______||__| |______/  | _| `._____/__/     \__\ | _| `._____|   |__|    )"
+         << endl
          << endl;
     Sleep(1000);
     // system("cls");
@@ -103,6 +106,7 @@ int main()
 |  |\/|  |   /  /_\  \   |  . `  |   /  /_\  \  |  | |_ | |   __|  |  |\/|  | |   __|  |  . `  |     |  |     
 |  |  |  |  /  _____  \  |  |\   |  /  _____  \ |  |__| | |  |____ |  |  |  | |  |____ |  |\   |     |  |     
 |__|  |__| /__/     \__\ |__| \__| /__/     \__\ \______| |_______||__|  |__| |_______||__| \__|     |__|     )"
+         << endl
          << endl;
     Sleep(1000);
     // system("cls");
@@ -112,8 +116,12 @@ int main()
     \   \      \_    _/   \   \       |  |     |   __|  |  |\/|  |
 .----)   |       |  | .----)   |      |  |     |  |____ |  |  |  |
 |_______/        |__| |_______/       |__|     |_______||__|  |__|)"
+         << endl
          << endl;
     Sleep(1000);
+    cout << "\033[32mPress any key to start the program." << endl;
+    cout << "--> \033[0m";
+    cin.get();
     system("cls");
 
     welcome();
@@ -261,7 +269,7 @@ void studentLogin()
     if (!cred)
     {
         cout << "Unable to open 'credentials.txt'" << endl;
-        return;
+        cout << "Maybe the file is missing?" << endl;
     }
 
     cout << "Please enter your ID: ";
@@ -540,7 +548,6 @@ void borrowBook()
         fout.close();
         if (bookBorrowed == true)
         {
-            cout << "\033[1;32mBook borrowed successfully.\033[0m" << endl;
             if (remove(bookFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: booklist.csv" << endl;
@@ -550,6 +557,7 @@ void borrowBook()
                 cerr << "Error renaming file: TEMP.csv" << endl;
             }
             system("cls");
+            cout << "\033[1;32mBook borrowed successfully.\033[0m" << endl;
         }
         else
         {
