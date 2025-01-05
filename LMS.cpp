@@ -6,6 +6,10 @@
 #include <windows.h>
 using namespace std;
 
+const string credFile = "data/credentials.txt";
+const string bookFile = "data/booklist.csv";
+const string tempFile = "data/TEMP.csv";
+
 bool loggedInAsAdmin = false;
 bool loggedInAsStudent = false;
 string Alias = "Guest!\n";
@@ -35,7 +39,7 @@ public:
     }
     void add()
     {
-        ofstream bookList("data/booklist.csv", ios::app);
+        ofstream bookList(bookFile, ios::app);
         if (bookList.is_open())
         {
             bookList << Title << ", ";
@@ -252,7 +256,7 @@ void studentLogin()
     cout << "\033[1;36m========================================\033[0m" << endl;
     loggedInAsAdmin = false;
     string ID, pass, line;
-    ifstream cred("data/credentials.txt");
+    ifstream cred(credFile);
 
     if (!cred)
     {
@@ -339,7 +343,7 @@ void createAccount()
 
         cout << "Please enter student's ID: ";
         cin >> ID;
-        ifstream fin("data/credentials.txt");
+        ifstream fin(credFile);
         string line;
         while (getline(fin, line))
         {
@@ -352,7 +356,7 @@ void createAccount()
                 mainMenu();
             }
         }
-        ofstream cred("data/credentials.txt", ios::app);
+        ofstream cred(credFile, ios::app);
         if (cred.is_open())
         {
             cred << ID << " ";
@@ -367,7 +371,6 @@ void createAccount()
         else
         {
             cerr << "Error opening the file 'credentials.txt'" << endl;
-            // mainMenu();
         }
         mainMenu();
     }
@@ -382,7 +385,7 @@ void createAccount()
 void listBooks()
 {
     system("cls");
-    ifstream fin("data/booklist.csv");
+    ifstream fin(bookFile);
     if (!fin.is_open())
     {
         cerr << "Error opening file: booklist.csv" << endl;
@@ -431,7 +434,7 @@ void borrowBook()
     cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsStudent)
     {
-        ifstream fin("data/booklist.csv", ios::in);
+        ifstream fin(bookFile, ios::in);
         if (!fin.is_open())
         {
             cerr << "Error Opening CSV file" << endl;
@@ -446,7 +449,7 @@ void borrowBook()
         cin >> bookNum;
         cin.ignore();
         system("cls");
-        ofstream fout("data/TEMP.csv", ios::out);
+        ofstream fout(tempFile, ios::out);
 
         string username = Alias.substr(0, Alias.size() - 2);
         string title, author, genre, issueDate, returnDate, borrowTimes, name;
@@ -537,21 +540,21 @@ void borrowBook()
         fout.close();
         if (bookBorrowed == true)
         {
-            system("cls");
             cout << "\033[1;32mBook borrowed successfully.\033[0m" << endl;
-            if (remove("data/booklist.csv") != 0)
+            if (remove(bookFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: booklist.csv" << endl;
             }
-            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            if (rename(tempFile.c_str(), bookFile.c_str()) != 0)
             {
                 cerr << "Error renaming file: TEMP.csv" << endl;
             }
+            system("cls");
         }
         else
         {
             cout << ((coutNotAvailable) ? "" : "\033[1;31mBook not found.\033[0m") << endl;
-            if (remove("data/TEMP.csv") != 0)
+            if (remove(tempFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: TEMP.csv" << endl;
             }
@@ -573,7 +576,7 @@ void returnBook()
         cout << "\033[1;36m========================================\033[0m" << endl;
         cout << "\033[1;36m               Return Book              \033[0m" << endl;
         cout << "\033[1;36m========================================\033[0m" << endl;
-        ifstream fin("data/booklist.csv", ios::in);
+        ifstream fin(bookFile, ios::in);
         if (!fin.is_open())
         {
             cerr << "Error Opening CSV file" << endl;
@@ -588,9 +591,8 @@ void returnBook()
         cin >> bookNum;
         cin.ignore();
         system("cls");
-        ofstream fout("data/TEMP.csv", ios::out);
+        ofstream fout(tempFile, ios::out);
 
-        // string username = Alias.substr(0, Alias.size() - 2);
         string title, author, genre, issueDate, returnDate, username, borrowTimes;
 
         while (getline(fin, line))
@@ -643,11 +645,11 @@ void returnBook()
         if (bookReturned == true)
         {
             cout << "Book returned successfully." << endl;
-            if (remove("data/booklist.csv") != 0)
+            if (remove(bookFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: booklist.csv" << endl;
             }
-            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            if (rename(tempFile.c_str(), bookFile.c_str()) != 0)
             {
                 cerr << "Error renaming file: TEMP.csv" << endl;
             }
@@ -655,7 +657,7 @@ void returnBook()
         else
         {
             cout << "Book not found." << endl;
-            if (remove("data/TEMP.csv") != 0)
+            if (remove(tempFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: TEMP.csv" << endl;
             }
@@ -704,7 +706,7 @@ void searchBook()
     cout << "\033[1;36m========================================\033[0m" << endl;
     cout << "\033[1;36m               Book Search              \033[0m" << endl;
     cout << "\033[1;36m========================================\033[0m" << endl;
-    ifstream find("data/booklist.csv");
+    ifstream find(bookFile);
     if (!find.is_open())
     {
         cerr << "Error opening file: booklist.csv" << endl;
@@ -756,7 +758,7 @@ void deleteBook()
     cout << "========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
-        ifstream fin("data/booklist.csv", ios::in);
+        ifstream fin(bookFile, ios::in);
         if (!fin.is_open())
         {
             cerr << "Error Opening CSV file" << endl;
@@ -768,7 +770,7 @@ void deleteBook()
         int bookNum, currentBook = 1;
         cout << "Enter the book number to delete: ";
         cin >> bookNum;
-        ofstream fout("data/TEMP.csv", ios::out);
+        ofstream fout(tempFile, ios::out);
         while (getline(fin, line))
         {
             if (currentBook != bookNum)
@@ -787,18 +789,18 @@ void deleteBook()
         if (bookFound == true)
         {
             cout << "Book deleted successfully." << endl;
-            if (remove("data/booklist.csv") != 0)
+            if (remove(bookFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: booklist.csv" << endl;
             }
-            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            if (rename(tempFile.c_str(), bookFile.c_str()) != 0)
             {
                 cerr << "Error renaming file: TEMP.csv" << endl;
             }
         }
         else
         {
-            if (remove("data/TEMP.csv") != 0)
+            if (remove(tempFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: TEMP.csv" << endl;
             }
@@ -821,8 +823,8 @@ void editBook()
     cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
-        ifstream fin("data/booklist.csv", ios::in);
-        ofstream fout("data/TEMP.csv", ios::out);
+        ifstream fin(bookFile, ios::in);
+        ofstream fout(tempFile, ios::out);
         if (!fin.is_open())
         {
             cerr << "Error Opening CSV file" << endl;
@@ -886,11 +888,11 @@ void editBook()
         {
             system("cls");
             cout << "Book edited successfully." << endl;
-            if (remove("data/booklist.csv") != 0)
+            if (remove(bookFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: booklist.csv" << endl;
             }
-            if (rename("data/TEMP.csv", "data/booklist.csv") != 0)
+            if (rename(tempFile.c_str(), bookFile.c_str()) != 0)
             {
                 cerr << "Error renaming file: TEMP.csv" << endl;
             }
@@ -898,7 +900,7 @@ void editBook()
         else
         {
             cout << "Book not found." << endl;
-            if (remove("data/TEMP.csv") != 0)
+            if (remove(tempFile.c_str()) != 0)
             {
                 cerr << "Error deleting file: TEMP.csv" << endl;
             }
@@ -920,7 +922,7 @@ void report()
     cout << "\033[1;36m========================================\033[0m" << endl;
     if (loggedInAsAdmin)
     {
-        ifstream fin("data/booklist.csv", ios::in);
+        ifstream fin(bookFile, ios::in);
         if (!fin.is_open())
         {
             cerr << "Error Opening CSV file" << endl;
