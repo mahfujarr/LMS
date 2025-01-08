@@ -15,8 +15,8 @@ Paths Untrodden, L. Stone, Horror, NULL, NULL, ,0
 Paths Untrodden, R. Woods, Historical Fiction, NULL, NULL, ,0
 The Ironclad Oath, S. Hawthorne, Adventure, NULL, NULL, ,0
 Falling Stars, R. Woods, Adventure, NULL, NULL, ,0
-Paths Untrodden, M. Vega, Adventure, NULL, NULL, ,0
-Falling Stars, M. Vega, Fantasy, NULL, NULL, ,0
+Paths Untrodden, M. Vega, Adventure, 2025, 2026, 23303151,1
+Falling Stars, M. Vega, Fantasy, 2025, 2026, 23303151,1
 Shadows of the Moon, J. Harper, Horror, NULL, NULL, ,0
 The Alchemist, Paolo Coelho, Fiction, 2025, 2026, 23303151,1
 Object-Oriented Programming with C++, E Balagurusamy, Academic, NULL, NULL, ,0
@@ -27,10 +27,10 @@ Becoming, Michelle Obama, Biography, NULL, NULL, ,0
 Educated, Tara Westover, Memoir, NULL, NULL, ,0
 The Night Circus, Erin Morgenstern, Fantasy, NULL, NULL, ,0
 The Goldfinch, Donna Tartt, Fiction, NULL, NULL, ,0
-The Road, Cormac McCarthy, Dystopian, NULL, NULL, ,0
-Sapiens, Yuval Noah Harari, Non-Fiction, NULL, NULL, ,0
+The Road, Cormac McCarthy, Dystopian, 2025, 2026, 23303151,1
+Sapiens, Yuval Noah Harari, Non-Fiction, 2025, 2026, 23303151,1
 The Catcher in the Rye, J.D. Salinger, Fiction, NULL, NULL, ,0
-1984, George Orwell, Dystopian, NULL, NULL, ,0
+1984, George Orwell, Dystopian, 2025, 2026, 23303151,1
 The Great Gatsby, F. Scott Fitzgerald, Fiction, NULL, NULL, ,0
 The Silent Patient, Alex Michaelides, Thriller, NULL, NULL, ,0
 Where the Crawdads Sing, Delia Owens, Mystery, NULL, NULL, ,0
@@ -38,3 +38,4 @@ Becoming, Michelle Obama, Biography, NULL, NULL, ,0
 Educated, Tara Westover, Memoir, NULL, NULL, ,2
 The Night Circus, Erin Morgenstern, Fantasy, 2025, 2026, joy,1
 The Goldfinch, Donna Tartt, Fiction, 2024, 2025, joy,1
+mahfujar, rahman, joy, NULL, NULL, ,0

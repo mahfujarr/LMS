@@ -1,5 +1,7 @@
-.vscode/settings.json
+.vscode
 data/credentials.txt
 data/booklist.csv
 data/TEMP.csv
 data/booklist.csv
+LMS.exe
+LMS.o
